@@ -24,3 +24,5 @@ flutter:
   uses-material-design: true
   assets:
     - assets/tomato.png
+    - assets/cat.jpeg
+    - assets/gps.png

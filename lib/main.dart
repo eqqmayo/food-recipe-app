@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:food_recipe_app/data/model/ingredient.dart';
+import 'package:food_recipe_app/data/model/profile.dart';
+import 'package:food_recipe_app/presentation/component/creator_profile.dart';
 import 'package:food_recipe_app/presentation/component/ingredient_item.dart';
 
 void main() {
@@ -18,6 +20,7 @@ class _MainAppState extends State<MainApp> {
   Widget build(BuildContext context) {
     return const MaterialApp(
       home: Scaffold(
+        backgroundColor: Colors.white,
         body: Column(
           children: [
             SizedBox(height: 30),
@@ -26,6 +29,13 @@ class _MainAppState extends State<MainApp> {
                 image: 'assets/tomato.png',
                 name: 'Tomatoes',
                 weight: '500',
+              ),
+            ),
+            CreatorProfile(
+              profile: Profile(
+                image: 'assets/cat.jpeg',
+                name: 'Meow',
+                location: 'LA, California',
               ),
             ),
           ],

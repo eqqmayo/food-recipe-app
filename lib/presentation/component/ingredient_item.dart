@@ -15,9 +15,9 @@ class IngredientItem extends StatelessWidget {
       padding: const EdgeInsets.only(top: 4, bottom: 4, left: 8, right: 8),
       child: Container(
         height: 100,
-        padding: EdgeInsets.all(16),
+        padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
-          color: const Color.fromARGB(255, 235, 235, 235),
+          color: Color.fromARGB(255, 241, 241, 241),
           borderRadius: BorderRadius.circular(20),
         ),
         child: Row(
@@ -29,22 +29,22 @@ class IngredientItem extends StatelessWidget {
                 borderRadius: BorderRadius.circular(10),
                 image: DecorationImage(
                   image: AssetImage(ingredient.image),
-                  fit: BoxFit.cover, // 이미지 크기 조정
+                  fit: BoxFit.cover,
                 ),
               ),
             ),
-            SizedBox(width: 25),
+            const SizedBox(width: 25),
             Text(
               ingredient.name,
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
               ),
             ),
-            Spacer(),
+            const Spacer(),
             Text(
               '${ingredient.weight}g',
-              style: TextStyle(
+              style: const TextStyle(
                   color: Colors.grey,
                   fontSize: 16,
                   fontWeight: FontWeight.w500),
