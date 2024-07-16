@@ -14,6 +14,7 @@ class CreatorProfile extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(top: 4, bottom: 4, left: 8, right: 8),
       child: Container(
+        color: Color.fromARGB(170, 247, 247, 247),
         height: 100,
         padding: const EdgeInsets.only(left: 16, right: 16),
         child: Row(
@@ -30,15 +31,15 @@ class CreatorProfile extends StatelessWidget {
                 ),
               ),
             ),
-            SizedBox(width: 15),
+            const SizedBox(width: 15),
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   profile.name,
-                  style: TextStyle(
-                    fontSize: 24,
+                  style: const TextStyle(
+                    fontSize: 22,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -46,14 +47,14 @@ class CreatorProfile extends StatelessWidget {
                   children: [
                     Image.asset(
                       'assets/gps.png',
-                      height: 16,
-                      width: 16,
+                      height: 15,
+                      width: 15,
                     ),
-                    SizedBox(width: 3),
+                    const SizedBox(width: 3),
                     Text(
                       profile.location,
                       style: TextStyle(
-                        fontSize: 16,
+                        fontSize: 15,
                         color: Colors.grey[400],
                         fontWeight: FontWeight.w500,
                       ),
@@ -62,20 +63,20 @@ class CreatorProfile extends StatelessWidget {
                 )
               ],
             ),
-            Spacer(),
+            const Spacer(),
             SizedBox(
               height: 50,
               width: 90,
               child: TextButton(
                 onPressed: () {},
-                child: Text('Follow'),
                 style: TextButton.styleFrom(
-                  backgroundColor: Color.fromARGB(255, 67, 139, 92),
+                  backgroundColor: const Color.fromARGB(255, 67, 139, 92),
                   foregroundColor: Colors.white,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8),
                   ),
                 ),
+                child: const Text('Follow'),
               ),
             ),
           ],

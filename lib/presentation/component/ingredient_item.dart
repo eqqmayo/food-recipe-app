@@ -17,7 +17,7 @@ class IngredientItem extends StatelessWidget {
         height: 100,
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
-          color: Color.fromARGB(255, 241, 241, 241),
+          color: const Color.fromARGB(255, 241, 241, 241),
           borderRadius: BorderRadius.circular(20),
         ),
         child: Row(

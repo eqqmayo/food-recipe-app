@@ -3,6 +3,7 @@ import 'package:food_recipe_app/data/model/ingredient.dart';
 import 'package:food_recipe_app/data/model/profile.dart';
 import 'package:food_recipe_app/presentation/component/creator_profile.dart';
 import 'package:food_recipe_app/presentation/component/ingredient_item.dart';
+import 'package:food_recipe_app/presentation/component/pop_up_dialog.dart';
 
 void main() {
   runApp(const MainApp());
@@ -38,6 +39,7 @@ class _MainAppState extends State<MainApp> {
                 location: 'LA, California',
               ),
             ),
+            PopUpDialog(url: 'app.Recipe.co/keem_gelato')
           ],
         ),
       ),
