@@ -14,7 +14,7 @@ class CreatorProfile extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(top: 4, bottom: 4, left: 8, right: 8),
       child: Container(
-        color: Color.fromARGB(170, 247, 247, 247),
+        color: const Color.fromARGB(170, 247, 247, 247),
         height: 100,
         padding: const EdgeInsets.only(left: 16, right: 16),
         child: Row(
