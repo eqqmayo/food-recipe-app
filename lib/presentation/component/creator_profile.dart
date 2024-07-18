@@ -46,7 +46,7 @@ class CreatorProfile extends StatelessWidget {
                 Row(
                   children: [
                     Image.asset(
-                      'assets/gps.png',
+                      'assets/icons/gps.png',
                       height: 15,
                       width: 15,
                     ),
