@@ -44,6 +44,9 @@ flutter:
     - assets/images/lemon.jpg
     - assets/icons/google.png
     - assets/icons/facebook.png
+    - assets/icons/avatar.png
+    - assets/icons/search.png
+    - assets/icons/setting.png
 
   fonts:
     - family: Pretendard

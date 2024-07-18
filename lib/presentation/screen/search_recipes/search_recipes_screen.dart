@@ -1,0 +1,87 @@
+import 'package:flutter/material.dart';
+import 'package:food_recipe_app/presentation/component/custom_search_bar.dart';
+import 'package:food_recipe_app/presentation/component/square_recipe_card.dart';
+import 'package:food_recipe_app/presentation/screen/search_recipes/search_recipes_view_model.dart';
+
+class SearchRecipesScreen extends StatelessWidget {
+  final SearchRecipesViewModel _searchRecipesViewModel;
+  final TextEditingController _searchController = TextEditingController();
+
+  SearchRecipesScreen(
+    this._searchRecipesViewModel, {
+    super.key,
+  }) {
+    _searchController.addListener(_onTextChanged);
+  }
+
+  void _onTextChanged() {
+    _searchRecipesViewModel.searchRecipes(_searchController.text);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.white,
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        flexibleSpace: Container(
+          padding: const EdgeInsets.only(top: 20),
+          child: const Align(
+            alignment: Alignment.center,
+            child: Text(
+              'Search recipes',
+              style: TextStyle(
+                fontSize: 21,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+          ),
+        ),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.fromLTRB(30, 10, 30, 10),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            CustomSearchBar(
+              controller: _searchController,
+              placeholder: 'Search recipe',
+            ),
+            const Text(
+              'Search Result',
+              style: TextStyle(
+                fontWeight: FontWeight.w600,
+                fontSize: 17,
+                height: 3.5,
+              ),
+            ),
+            ListenableBuilder(
+              listenable: _searchRecipesViewModel,
+              builder: (context, child) {
+                final recipes = _searchRecipesViewModel.recipes;
+                return Expanded(
+                  child: Stack(
+                    children: [
+                      GridView(
+                          gridDelegate:
+                              const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
+                            crossAxisSpacing: 10,
+                            mainAxisSpacing: 10,
+                          ),
+                          children: recipes
+                              .map((recipe) => SquareRecipeCard(recipe: recipe))
+                              .toList()),
+                      if (_searchRecipesViewModel.isLoading)
+                        const Center(child: CircularProgressIndicator()),
+                    ],
+                  ),
+                );
+              },
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}

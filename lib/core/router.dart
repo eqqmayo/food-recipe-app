@@ -5,6 +5,8 @@ import 'package:food_recipe_app/presentation/screen/navigation.dart';
 import 'package:food_recipe_app/presentation/screen/saved_recipes/recipe_detail_screen.dart.dart';
 import 'package:food_recipe_app/presentation/screen/saved_recipes/saved_recipes_screen.dart';
 import 'package:food_recipe_app/presentation/screen/saved_recipes/saved_recipes_view_model.dart';
+import 'package:food_recipe_app/presentation/screen/search_recipes/search_recipes_screen.dart';
+import 'package:food_recipe_app/presentation/screen/search_recipes/search_recipes_view_model.dart';
 import 'package:food_recipe_app/presentation/screen/sign_in/sign_in_screen.dart';
 import 'package:food_recipe_app/presentation/screen/sign_up/sign_up_screen.dart';
 import 'package:food_recipe_app/presentation/screen/splash_screen/splash_screen.dart';
@@ -43,6 +45,16 @@ final router = GoRouter(
         final recipe = state.extra as Recipe;
         return RecipeDetailScreen(recipe: recipe);
       },
+    ),
+    GoRoute(
+      path: '/search_recipes_screen',
+      builder: (context, state) => SearchRecipesScreen(
+        SearchRecipesViewModel(
+          SavedRecipeRepositoryImpl(
+            SavedRecipeDataSource(),
+          ),
+        ),
+      ),
     ),
   ],
 );

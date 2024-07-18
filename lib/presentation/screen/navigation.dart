@@ -17,16 +17,16 @@ class Navigation extends StatefulWidget {
 class _NavigationState extends State<Navigation> {
   int _selectedIndex = 0;
 
-  late final List<(String, Widget)> _pages;
+  late final List<Widget> _pages;
 
   @override
   void initState() {
     super.initState();
     _pages = [
-      ('Home', const HomeScreen()),
-      ('Saved recipes', widget._savedRecipesScreen),
-      ('Notification', const HomeScreen()),
-      ('Profile', const HomeScreen()),
+      HomeScreen(),
+      widget._savedRecipesScreen,
+      HomeScreen(),
+      HomeScreen(),
     ];
   }
 
@@ -45,19 +45,7 @@ class _NavigationState extends State<Navigation> {
       ),
       child: Scaffold(
         backgroundColor: Colors.white,
-        appBar: AppBar(
-          backgroundColor: Colors.white,
-          title: Center(
-            child: Text(
-              _pages.elementAt(_selectedIndex).$1,
-              style: const TextStyle(
-                fontWeight: FontWeight.w600,
-                fontSize: 20,
-              ),
-            ),
-          ),
-        ),
-        body: Center(child: _pages[_selectedIndex].$2),
+        body: Center(child: _pages[_selectedIndex]),
         bottomNavigationBar: BottomNavigationBar(
           items: [
             _buildNavItem('home'),
