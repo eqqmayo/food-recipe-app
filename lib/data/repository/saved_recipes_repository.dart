@@ -3,7 +3,6 @@ import 'package:food_recipe_app/data/model/recipe.dart';
 
 abstract interface class SavedRecipeRepository {
   Future<List<Recipe>> getSavedRecipes();
-  Future<List<Recipe>> searchRecipes(String keyword);
 }
 
 class SavedRecipeRepositoryImpl implements SavedRecipeRepository {
@@ -14,12 +13,6 @@ class SavedRecipeRepositoryImpl implements SavedRecipeRepository {
   @override
   Future<List<Recipe>> getSavedRecipes() async {
     final savedRecipes = await _savedRecipeDataSource.getSavedRecipes();
-    return List.unmodifiable(savedRecipes);
-  }
-
-  @override
-  Future<List<Recipe>> searchRecipes(String keyword) async {
-    final savedRecipes = await _savedRecipeDataSource.searchRecipes(keyword);
     return List.unmodifiable(savedRecipes);
   }
 }

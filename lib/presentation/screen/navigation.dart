@@ -3,9 +3,11 @@ import 'package:food_recipe_app/presentation/screen/home/home_screen.dart';
 import 'package:food_recipe_app/presentation/screen/saved_recipes/saved_recipes_screen.dart';
 
 class Navigation extends StatefulWidget {
+  final HomeScreen _homeScreen;
   final SavedRecipesScreen _savedRecipesScreen;
 
   const Navigation(
+    this._homeScreen,
     this._savedRecipesScreen, {
     super.key,
   });
@@ -23,10 +25,10 @@ class _NavigationState extends State<Navigation> {
   void initState() {
     super.initState();
     _pages = [
-      HomeScreen(),
+      widget._homeScreen,
       widget._savedRecipesScreen,
-      HomeScreen(),
-      HomeScreen(),
+      widget._homeScreen,
+      widget._homeScreen,
     ];
   }
 

@@ -28,7 +28,13 @@ class SearchRecipesViewModel with ChangeNotifier {
     _isLoading = true;
     notifyListeners();
 
-    _recipes = await _savedRecipeRepository.searchRecipes(keyword);
+    final recipes = await _savedRecipeRepository.getSavedRecipes();
+    _recipes = recipes
+        .where((recipe) =>
+            recipe.title.toLowerCase().contains(keyword.toLowerCase()) ||
+            recipe.creator.toLowerCase().contains(keyword.toLowerCase()))
+        .toList();
+
     _isLoading = false;
     notifyListeners();
   }

@@ -3,19 +3,36 @@ import 'package:food_recipe_app/presentation/component/custom_search_bar.dart';
 import 'package:food_recipe_app/presentation/component/square_recipe_card.dart';
 import 'package:food_recipe_app/presentation/screen/search_recipes/search_recipes_view_model.dart';
 
-class SearchRecipesScreen extends StatelessWidget {
+class SearchRecipesScreen extends StatefulWidget {
   final SearchRecipesViewModel _searchRecipesViewModel;
-  final TextEditingController _searchController = TextEditingController();
 
-  SearchRecipesScreen(
+  const SearchRecipesScreen(
     this._searchRecipesViewModel, {
     super.key,
-  }) {
+  });
+
+  @override
+  State<SearchRecipesScreen> createState() => _SearchRecipesScreenState();
+}
+
+class _SearchRecipesScreenState extends State<SearchRecipesScreen> {
+  final TextEditingController _searchController = TextEditingController();
+
+  @override
+  void initState() {
     _searchController.addListener(_onTextChanged);
+    super.initState();
   }
 
   void _onTextChanged() {
-    _searchRecipesViewModel.searchRecipes(_searchController.text);
+    widget._searchRecipesViewModel.searchRecipes(_searchController.text);
+  }
+
+  @override
+  void dispose() {
+    _searchController.removeListener(_onTextChanged);
+    _searchController.dispose();
+    super.dispose();
   }
 
   @override
@@ -56,9 +73,9 @@ class SearchRecipesScreen extends StatelessWidget {
               ),
             ),
             ListenableBuilder(
-              listenable: _searchRecipesViewModel,
+              listenable: widget._searchRecipesViewModel,
               builder: (context, child) {
-                final recipes = _searchRecipesViewModel.recipes;
+                final recipes = widget._searchRecipesViewModel.recipes;
                 return Expanded(
                   child: Stack(
                     children: [
@@ -72,7 +89,7 @@ class SearchRecipesScreen extends StatelessWidget {
                           children: recipes
                               .map((recipe) => SquareRecipeCard(recipe: recipe))
                               .toList()),
-                      if (_searchRecipesViewModel.isLoading)
+                      if (widget._searchRecipesViewModel.isLoading)
                         const Center(child: CircularProgressIndicator()),
                     ],
                   ),

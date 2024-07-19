@@ -71,12 +71,4 @@ class SavedRecipeDataSource {
   Future<List<Recipe>> getSavedRecipes() async {
     return _savedRecipes;
   }
-
-  Future<List<Recipe>> searchRecipes(String keyword) async {
-    return _savedRecipes
-        .where((recipe) =>
-            recipe.title.toLowerCase().contains(keyword) ||
-            recipe.creator.toLowerCase().contains(keyword))
-        .toList();
-  }
 }

@@ -1,6 +1,7 @@
 import 'package:food_recipe_app/data/data_source/saved_recipes_data_source.dart';
 import 'package:food_recipe_app/data/model/recipe.dart';
 import 'package:food_recipe_app/data/repository/saved_recipes_repository.dart';
+import 'package:food_recipe_app/presentation/screen/home/home_screen.dart';
 import 'package:food_recipe_app/presentation/screen/navigation.dart';
 import 'package:food_recipe_app/presentation/screen/saved_recipes/recipe_detail_screen.dart.dart';
 import 'package:food_recipe_app/presentation/screen/saved_recipes/saved_recipes_screen.dart';
@@ -30,6 +31,7 @@ final router = GoRouter(
     GoRoute(
       path: '/navigation',
       builder: (context, state) => Navigation(
+        HomeScreen(),
         SavedRecipesScreen(
           SavedRecipesViewModel(
             SavedRecipeRepositoryImpl(
