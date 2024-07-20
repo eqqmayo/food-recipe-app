@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:food_recipe_app/data/model/ingredient.dart';
 
-class IngredientItem extends StatelessWidget {
-  final Ingredient ingredient;
+class DescriptionBox extends StatelessWidget {
+  final String title;
+  final String description;
 
-  const IngredientItem({
+  const DescriptionBox({
     super.key,
-    required this.ingredient,
+    required this.title,
+    required this.description,
   });
 
   @override
@@ -20,31 +21,19 @@ class IngredientItem extends StatelessWidget {
           color: const Color.fromARGB(255, 241, 241, 241),
           borderRadius: BorderRadius.circular(20),
         ),
-        child: Row(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Container(
-              width: 50,
-              height: 50,
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(10),
-                image: DecorationImage(
-                  image: AssetImage('assets/images/${ingredient.image}'),
-                  fit: BoxFit.contain,
-                ),
-              ),
-            ),
-            const SizedBox(width: 18),
             Text(
-              ingredient.name,
+              title,
               style: const TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.w600,
               ),
             ),
-            const Spacer(),
             Text(
-              ingredient.weight,
+              description,
               style: const TextStyle(
                   color: Colors.grey,
                   fontSize: 15,

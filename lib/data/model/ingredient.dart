@@ -6,6 +6,7 @@ part 'ingredient.g.dart';
 @freezed
 class Ingredient with _$Ingredient {
   const factory Ingredient({
+    required int recipeId,
     required String image,
     required String name,
     required String weight,

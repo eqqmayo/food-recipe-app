@@ -1,22 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:food_recipe_app/presentation/screen/home/home_screen.dart';
-import 'package:food_recipe_app/presentation/screen/saved_recipes/saved_recipes_screen.dart';
 
-class Navigation extends StatefulWidget {
+class NavigationScreen extends StatefulWidget {
   final HomeScreen _homeScreen;
-  final SavedRecipesScreen _savedRecipesScreen;
+  final Widget _savedRecipesScreen;
 
-  const Navigation(
+  const NavigationScreen(
     this._homeScreen,
     this._savedRecipesScreen, {
     super.key,
   });
 
   @override
-  State<Navigation> createState() => _NavigationState();
+  State<NavigationScreen> createState() => _NavigationScreenState();
 }
 
-class _NavigationState extends State<Navigation> {
+class _NavigationScreenState extends State<NavigationScreen> {
   int _selectedIndex = 0;
 
   late final List<Widget> _pages;

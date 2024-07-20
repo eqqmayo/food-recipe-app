@@ -1,18 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:food_recipe_app/presentation/component/recipe_card.dart';
 import 'package:food_recipe_app/presentation/screen/saved_recipes/saved_recipes_view_model.dart';
+import 'package:food_recipe_app/util/change_notifier_provider.dart';
 import 'package:go_router/go_router.dart';
 
 class SavedRecipesScreen extends StatelessWidget {
-  final SavedRecipesViewModel _savedRecipesViewModel;
-
-  const SavedRecipesScreen(
-    this._savedRecipesViewModel, {
-    super.key,
-  });
+  const SavedRecipesScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final viewModel =
+        ChangeNotifierProvider.of<SavedRecipesViewModel>(context).value;
+
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -20,7 +19,7 @@ class SavedRecipesScreen extends StatelessWidget {
         title: const Center(
           child: Text(
             'Saved recipes',
-            style: const TextStyle(
+            style: TextStyle(
               fontSize: 21,
               fontWeight: FontWeight.w600,
             ),
@@ -29,9 +28,9 @@ class SavedRecipesScreen extends StatelessWidget {
       ),
       body: Center(
         child: ListenableBuilder(
-          listenable: _savedRecipesViewModel,
+          listenable: viewModel,
           builder: (context, child) {
-            final recipes = _savedRecipesViewModel.savedRecipes;
+            final recipes = viewModel.savedRecipes;
             return Stack(
               children: [
                 ListView(
@@ -50,7 +49,7 @@ class SavedRecipesScreen extends StatelessWidget {
                       )
                       .toList(),
                 ),
-                if (_savedRecipesViewModel.isLoading)
+                if (viewModel.isLoading)
                   const Center(child: CircularProgressIndicator()),
               ],
             );

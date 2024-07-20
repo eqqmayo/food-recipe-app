@@ -69,7 +69,7 @@ class CustomSearchBar extends StatelessWidget {
           ),
         ),
         const SizedBox(width: 20),
-        Container(
+        SizedBox(
           width: 46,
           height: 46,
           child: TextButton(

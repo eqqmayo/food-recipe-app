@@ -1,133 +1,203 @@
 import 'package:flutter/material.dart';
+import 'package:food_recipe_app/data/model/creator.dart';
 import 'package:food_recipe_app/data/model/recipe.dart';
+import 'package:food_recipe_app/presentation/component/creator_profile.dart';
+import 'package:food_recipe_app/presentation/component/description_box.dart';
+import 'package:food_recipe_app/presentation/component/ingredient_item.dart';
+import 'package:food_recipe_app/presentation/component/noname_card.dart';
+import 'package:food_recipe_app/presentation/screen/saved_recipes/recipe_detail_view_model.dart';
+import 'package:food_recipe_app/util/change_notifier_provider.dart';
 
-class RecipeDetailScreen extends StatelessWidget {
+class RecipeDetailScreen extends StatefulWidget {
   final Recipe recipe;
 
   const RecipeDetailScreen({super.key, required this.recipe});
 
   @override
+  State<RecipeDetailScreen> createState() => _RecipeDetailScreenState();
+}
+
+class _RecipeDetailScreenState extends State<RecipeDetailScreen>
+    with SingleTickerProviderStateMixin {
+  late TabController _tabController;
+
+  @override
+  void initState() {
+    super.initState();
+    _tabController = TabController(length: 2, vsync: this);
+  }
+
+  @override
+  void dispose() {
+    _tabController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final recipe = widget.recipe;
+    final viewModel =
+        ChangeNotifierProvider.of<RecipeDatailViewModel>(context).value;
+
+    viewModel.getIngredients(recipe.id);
+    viewModel.getProcedures(recipe.id);
+
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(backgroundColor: Colors.white),
-      body: Column(
-        children: [
-          Hero(
-            tag: recipe.title,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10),
-              child: Card(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                elevation: 5,
-                child: Container(
-                  height: 200,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    image: DecorationImage(
-                      image: NetworkImage(recipe.thumbnail),
-                      fit: BoxFit.cover,
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 10),
+        child: Column(
+          children: [
+            Hero(
+              tag: recipe.id,
+              child: NonameCard(
+                thumbnail: recipe.thumbnail,
+                rating: recipe.rating,
+                cookTime: recipe.cookTime,
+              ),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(top: 8, left: 12),
+                  child: Text(
+                    recipe.title,
+                    style: const TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
-                  child: Stack(
-                    children: [
-                      Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          gradient: LinearGradient(
-                            colors: [
-                              Colors.black.withOpacity(0.0),
-                              Colors.black.withOpacity(0.7),
-                            ],
-                            begin: Alignment.topCenter,
-                            end: Alignment.bottomCenter,
-                          ),
-                        ),
-                      ),
-                      Positioned(
-                        top: 10,
-                        right: 10,
-                        child: Container(
-                          padding: const EdgeInsets.fromLTRB(8, 2, 8, 2),
-                          decoration: BoxDecoration(
-                            color: const Color(0xFFFAE2B8),
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                          child: Row(
-                            children: [
-                              const Icon(
-                                Icons.star,
-                                color: Color.fromARGB(255, 253, 166, 35),
-                                size: 15,
-                              ),
-                              const SizedBox(width: 2),
-                              Text(
-                                recipe.rating.toString(),
-                                style: const TextStyle(
-                                  fontWeight: FontWeight.w400,
-                                  fontSize: 13,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                      Positioned(
-                        bottom: 10,
-                        right: 10,
-                        child: Row(
-                          children: [
-                            Image.asset('assets/icons/timer.png'),
-                            const SizedBox(width: 4),
-                            Text(
-                              '${recipe.cookTime} min',
-                              style: const TextStyle(
-                                  color: Color.fromARGB(223, 255, 255, 255)),
-                            ),
-                            const SizedBox(width: 10),
-                            GestureDetector(
-                              onTap: () {},
-                              child: Container(
-                                width: 20,
-                                height: 20,
-                                padding: const EdgeInsets.all(4),
-                                decoration: const BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  color: Colors.white,
-                                ),
-                                child: Image.asset(
-                                  'assets/icons/inactive.png',
-                                  fit: BoxFit.contain,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
+                ),
+              ],
+            ),
+            CreatorProfile(
+              creator: Creator(
+                image: 'assets/images/cat.jpeg',
+                name: widget.recipe.creator,
+                location: 'SYD, Australia',
+              ),
+            ),
+            const SizedBox(height: 12),
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 6),
+              height: 42,
+              child: TabBar(
+                controller: _tabController,
+                tabs: const [
+                  Tab(text: 'Ingredient'),
+                  Tab(text: 'Procedure'),
+                ],
+                dividerHeight: 0,
+                labelColor: Colors.white,
+                unselectedLabelColor: const Color.fromARGB(255, 57, 152, 114),
+                splashFactory: NoSplash.splashFactory,
+                indicatorSize: TabBarIndicatorSize.tab,
+                indicator: BoxDecoration(
+                  borderRadius: BorderRadius.circular(12),
+                  color: const Color.fromARGB(255, 57, 152, 114),
                 ),
               ),
             ),
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(top: 8, left: 20),
-                child: Text(
-                  recipe.title,
-                  style: const TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
+            Expanded(
+              child: TabBarView(
+                controller: _tabController,
+                children: [
+                  ListenableBuilder(
+                    listenable: viewModel,
+                    builder: (context, child) {
+                      return Column(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(18),
+                            child: Row(
+                              children: [
+                                const Text(
+                                  '1 serve',
+                                  style: TextStyle(
+                                      color: Colors.grey,
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.w400),
+                                ),
+                                const Spacer(),
+                                Text(
+                                  '${viewModel.ingredients.length} items',
+                                  style: const TextStyle(
+                                      color: Colors.grey,
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.w400),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Expanded(
+                            child: ListView(
+                              children: viewModel.ingredients
+                                  .map(
+                                    (ingredient) =>
+                                        IngredientItem(ingredient: ingredient),
+                                  )
+                                  .toList(),
+                            ),
+                          ),
+                          if (viewModel.isLoading)
+                            const Center(child: CircularProgressIndicator()),
+                        ],
+                      );
+                    },
                   ),
-                ),
+                  ListenableBuilder(
+                    listenable: viewModel,
+                    builder: (context, child) {
+                      return Column(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(18),
+                            child: Row(
+                              children: [
+                                const Text(
+                                  '1 serve',
+                                  style: TextStyle(
+                                      color: Colors.grey,
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.w400),
+                                ),
+                                const Spacer(),
+                                Text(
+                                  '${viewModel.procedures.length} steps',
+                                  style: const TextStyle(
+                                      color: Colors.grey,
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.w400),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Expanded(
+                            child: ListView(
+                              children: viewModel.procedures
+                                  .map(
+                                    (procedure) => DescriptionBox(
+                                      title: 'Step ${procedure.stepNum}',
+                                      description: procedure.description,
+                                    ),
+                                  )
+                                  .toList(),
+                            ),
+                          ),
+                          if (viewModel.isLoading)
+                            const Center(child: CircularProgressIndicator()),
+                        ],
+                      );
+                    },
+                  ),
+                ],
               ),
-            ],
-          ),
-        ],
+            ),
+            const SizedBox(height: 20),
+          ],
+        ),
       ),
     );
   }

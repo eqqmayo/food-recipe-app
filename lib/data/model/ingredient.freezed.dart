@@ -20,6 +20,7 @@ Ingredient _$IngredientFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$Ingredient {
+  int get recipeId => throw _privateConstructorUsedError;
   String get image => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   String get weight => throw _privateConstructorUsedError;
@@ -36,7 +37,7 @@ abstract class $IngredientCopyWith<$Res> {
           Ingredient value, $Res Function(Ingredient) then) =
       _$IngredientCopyWithImpl<$Res, Ingredient>;
   @useResult
-  $Res call({String image, String name, String weight});
+  $Res call({int recipeId, String image, String name, String weight});
 }
 
 /// @nodoc
@@ -52,11 +53,16 @@ class _$IngredientCopyWithImpl<$Res, $Val extends Ingredient>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? recipeId = null,
     Object? image = null,
     Object? name = null,
     Object? weight = null,
   }) {
     return _then(_value.copyWith(
+      recipeId: null == recipeId
+          ? _value.recipeId
+          : recipeId // ignore: cast_nullable_to_non_nullable
+              as int,
       image: null == image
           ? _value.image
           : image // ignore: cast_nullable_to_non_nullable
@@ -81,7 +87,7 @@ abstract class _$$IngredientImplCopyWith<$Res>
       __$$IngredientImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String image, String name, String weight});
+  $Res call({int recipeId, String image, String name, String weight});
 }
 
 /// @nodoc
@@ -95,11 +101,16 @@ class __$$IngredientImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? recipeId = null,
     Object? image = null,
     Object? name = null,
     Object? weight = null,
   }) {
     return _then(_$IngredientImpl(
+      recipeId: null == recipeId
+          ? _value.recipeId
+          : recipeId // ignore: cast_nullable_to_non_nullable
+              as int,
       image: null == image
           ? _value.image
           : image // ignore: cast_nullable_to_non_nullable
@@ -120,11 +131,16 @@ class __$$IngredientImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$IngredientImpl implements _Ingredient {
   const _$IngredientImpl(
-      {required this.image, required this.name, required this.weight});
+      {required this.recipeId,
+      required this.image,
+      required this.name,
+      required this.weight});
 
   factory _$IngredientImpl.fromJson(Map<String, dynamic> json) =>
       _$$IngredientImplFromJson(json);
 
+  @override
+  final int recipeId;
   @override
   final String image;
   @override
@@ -134,7 +150,7 @@ class _$IngredientImpl implements _Ingredient {
 
   @override
   String toString() {
-    return 'Ingredient(image: $image, name: $name, weight: $weight)';
+    return 'Ingredient(recipeId: $recipeId, image: $image, name: $name, weight: $weight)';
   }
 
   @override
@@ -142,6 +158,8 @@ class _$IngredientImpl implements _Ingredient {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$IngredientImpl &&
+            (identical(other.recipeId, recipeId) ||
+                other.recipeId == recipeId) &&
             (identical(other.image, image) || other.image == image) &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.weight, weight) || other.weight == weight));
@@ -149,7 +167,7 @@ class _$IngredientImpl implements _Ingredient {
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, image, name, weight);
+  int get hashCode => Object.hash(runtimeType, recipeId, image, name, weight);
 
   @JsonKey(ignore: true)
   @override
@@ -167,13 +185,16 @@ class _$IngredientImpl implements _Ingredient {
 
 abstract class _Ingredient implements Ingredient {
   const factory _Ingredient(
-      {required final String image,
+      {required final int recipeId,
+      required final String image,
       required final String name,
       required final String weight}) = _$IngredientImpl;
 
   factory _Ingredient.fromJson(Map<String, dynamic> json) =
       _$IngredientImpl.fromJson;
 
+  @override
+  int get recipeId;
   @override
   String get image;
   @override

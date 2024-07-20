@@ -1,9 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:food_recipe_app/data/model/recipe.dart';
 
-class SquareRecipeCard extends StatelessWidget {
-  final Recipe recipe;
-  const SquareRecipeCard({super.key, required this.recipe});
+class NonameCard extends StatelessWidget {
+  final String thumbnail;
+  final double rating;
+  final int cookTime;
+
+  const NonameCard({
+    super.key,
+    required this.thumbnail,
+    required this.rating,
+    required this.cookTime,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -14,11 +21,10 @@ class SquareRecipeCard extends StatelessWidget {
       elevation: 5,
       child: Container(
         height: 200,
-        width: 200,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
           image: DecorationImage(
-            image: NetworkImage(recipe.thumbnail),
+            image: NetworkImage(thumbnail),
             fit: BoxFit.cover,
           ),
         ),
@@ -55,7 +61,7 @@ class SquareRecipeCard extends StatelessWidget {
                     ),
                     const SizedBox(width: 2),
                     Text(
-                      recipe.rating.toString(),
+                      rating.toString(),
                       style: const TextStyle(
                         fontWeight: FontWeight.w400,
                         fontSize: 13,
@@ -66,34 +72,35 @@ class SquareRecipeCard extends StatelessWidget {
               ),
             ),
             Positioned(
-              left: 10,
               bottom: 10,
               right: 10,
-              child: SizedBox(
-                width: 180,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      recipe.title,
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                      style: const TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.bold,
+              child: Row(
+                children: [
+                  Image.asset('assets/icons/timer.png'),
+                  const SizedBox(width: 4),
+                  Text(
+                    '$cookTime min',
+                    style: const TextStyle(
+                        color: Color.fromARGB(223, 255, 255, 255)),
+                  ),
+                  const SizedBox(width: 10),
+                  GestureDetector(
+                    onTap: () {},
+                    child: Container(
+                      width: 20,
+                      height: 20,
+                      padding: const EdgeInsets.all(4),
+                      decoration: const BoxDecoration(
+                        shape: BoxShape.circle,
                         color: Colors.white,
                       ),
-                    ),
-                    Text(
-                      'by ${recipe.creator}',
-                      style: const TextStyle(
-                        fontSize: 10,
-                        color: Colors.white,
-                        fontWeight: FontWeight.w300,
+                      child: Image.asset(
+                        'assets/icons/inactive.png',
+                        fit: BoxFit.contain,
                       ),
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
           ],

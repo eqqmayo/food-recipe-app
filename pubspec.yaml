@@ -7,6 +7,7 @@ environment:
   sdk: '>=3.4.3 <4.0.0'
 
 dependencies:
+  collection: ^1.18.0
   flutter:
     sdk: flutter
   flutter_rating_bar: ^4.0.1
@@ -25,8 +26,6 @@ dev_dependencies:
 flutter:
   uses-material-design: true
   assets:
-    - assets/images/tomato.png
-    - assets/images/cat.jpeg
     - assets/icons/gps.png
     - assets/icons/home.png
     - assets/icons/home-fill.png
@@ -38,15 +37,20 @@ flutter:
     - assets/icons/profile-fill.png
     - assets/icons/inactive.png
     - assets/icons/timer.png
-    - assets/images/salmon.jpg
-    - assets/images/orange.jpg
-    - assets/images/eggs.jpg
-    - assets/images/lemon.jpg
     - assets/icons/google.png
     - assets/icons/facebook.png
     - assets/icons/avatar.png
     - assets/icons/search.png
     - assets/icons/setting.png
+    - assets/images/tomato.png
+    - assets/images/cat.jpeg
+    - assets/images/salmon.jpg
+    - assets/images/acai.jpg
+    - assets/images/avo.jpg
+    - assets/images/banana.jpg
+    - assets/images/egg.jpeg
+    - assets/images/fish.jpg
+    - assets/images/octopus.jpeg        
 
   fonts:
     - family: Pretendard

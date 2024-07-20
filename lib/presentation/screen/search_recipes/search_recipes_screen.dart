@@ -2,14 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:food_recipe_app/presentation/component/custom_search_bar.dart';
 import 'package:food_recipe_app/presentation/component/square_recipe_card.dart';
 import 'package:food_recipe_app/presentation/screen/search_recipes/search_recipes_view_model.dart';
+import 'package:food_recipe_app/util/change_notifier_provider.dart';
 
 class SearchRecipesScreen extends StatefulWidget {
-  final SearchRecipesViewModel _searchRecipesViewModel;
-
-  const SearchRecipesScreen(
-    this._searchRecipesViewModel, {
-    super.key,
-  });
+  const SearchRecipesScreen({super.key});
 
   @override
   State<SearchRecipesScreen> createState() => _SearchRecipesScreenState();
@@ -18,6 +14,9 @@ class SearchRecipesScreen extends StatefulWidget {
 class _SearchRecipesScreenState extends State<SearchRecipesScreen> {
   final TextEditingController _searchController = TextEditingController();
 
+  SearchRecipesViewModel get viewModel =>
+      ChangeNotifierProvider.of<SearchRecipesViewModel>(context).value;
+
   @override
   void initState() {
     _searchController.addListener(_onTextChanged);
@@ -25,7 +24,7 @@ class _SearchRecipesScreenState extends State<SearchRecipesScreen> {
   }
 
   void _onTextChanged() {
-    widget._searchRecipesViewModel.searchRecipes(_searchController.text);
+    viewModel.searchRecipes(_searchController.text);
   }
 
   @override
@@ -73,9 +72,9 @@ class _SearchRecipesScreenState extends State<SearchRecipesScreen> {
               ),
             ),
             ListenableBuilder(
-              listenable: widget._searchRecipesViewModel,
+              listenable: viewModel,
               builder: (context, child) {
-                final recipes = widget._searchRecipesViewModel.recipes;
+                final recipes = viewModel.recipes;
                 return Expanded(
                   child: Stack(
                     children: [
@@ -89,7 +88,7 @@ class _SearchRecipesScreenState extends State<SearchRecipesScreen> {
                           children: recipes
                               .map((recipe) => SquareRecipeCard(recipe: recipe))
                               .toList()),
-                      if (widget._searchRecipesViewModel.isLoading)
+                      if (viewModel.isLoading)
                         const Center(child: CircularProgressIndicator()),
                     ],
                   ),
