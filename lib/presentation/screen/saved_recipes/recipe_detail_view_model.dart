@@ -35,7 +35,7 @@ class RecipeDatailViewModel with ChangeNotifier {
   }
 
   void getIngredients(int recipeId) async {
-    // _isLoading = true;
+    _isLoading = true;
     notifyListeners();
 
     final ingredients = await _ingredientRepository.getIngredients();
@@ -48,7 +48,7 @@ class RecipeDatailViewModel with ChangeNotifier {
   }
 
   void getProcedures(int recipeId) async {
-    // _isLoading = true;
+    _isLoading = true;
     notifyListeners();
 
     final procedures = await _procedureRepository.getProcedures();

@@ -75,7 +75,7 @@ class _RecipeDetailScreenState extends State<RecipeDetailScreen>
             CreatorProfile(
               creator: Creator(
                 image: 'assets/images/cat.jpeg',
-                name: widget.recipe.creator,
+                name: recipe.creator,
                 location: 'SYD, Australia',
               ),
             ),

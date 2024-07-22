@@ -6,7 +6,7 @@ class SavedRecipeDataSource {
       id: 1,
       thumbnail:
           'https://blog.kakaocdn.net/dn/bmMO3k/btsFJGT7VFo/zA06H1YOBGgDuVKjMN9XO0/img.png',
-      title: 'Rich flavored Okonomiyaki',
+      title: 'Rich Flavored Okonomiyaki',
       creator: 'Hirokazu Koreeda',
       cookTime: 20,
       rating: 4.5,
@@ -24,7 +24,7 @@ class SavedRecipeDataSource {
       id: 3,
       thumbnail:
           'https://assets.clevelandclinic.org/transform/0ffb41ec-877c-4d21-951e-2f2ae50c29e3/acaiberrydiet-1298159858-770x533-1_jpg',
-      title: 'Healthy Acai bowl',
+      title: 'Healthy Acai Bowl',
       creator: 'Rachel McAdams',
       cookTime: 10,
       rating: 4.2,
@@ -33,7 +33,7 @@ class SavedRecipeDataSource {
       id: 4,
       thumbnail:
           'https://blog.kakaocdn.net/dn/bmMO3k/btsFJGT7VFo/zA06H1YOBGgDuVKjMN9XO0/img.png',
-      title: 'OkOkonomiyaki',
+      title: 'Okokonomiyaki',
       creator: 'Hirokazu Koreeda',
       cookTime: 20,
       rating: 3.8,
@@ -60,7 +60,7 @@ class SavedRecipeDataSource {
       id: 7,
       thumbnail:
           'https://assets.clevelandclinic.org/transform/0ffb41ec-877c-4d21-951e-2f2ae50c29e3/acaiberrydiet-1298159858-770x533-1_jpg',
-      title: 'Fresh Acai bowl',
+      title: 'Fresh Acai Bowl',
       creator: 'Rachel McAdams',
       cookTime: 10,
       rating: 4.2,
