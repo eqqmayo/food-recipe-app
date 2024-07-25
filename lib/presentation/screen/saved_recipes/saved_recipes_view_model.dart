@@ -1,26 +1,25 @@
 import 'package:flutter/material.dart';
-import 'package:food_recipe_app/data/model/recipe.dart';
+import 'package:food_recipe_app/data/model/ui_state/saved_recipes_ui_state.dart';
 import 'package:food_recipe_app/data/repository/saved_recipes_repository.dart';
 
 class SavedRecipesViewModel with ChangeNotifier {
   final SavedRecipeRepository _savedRecipeRepository;
 
+  SavedRecipesUiState _state = const SavedRecipesUiState();
+  SavedRecipesUiState get state => _state;
+
   SavedRecipesViewModel(this._savedRecipeRepository) {
     fetchSavedRecipes();
   }
 
-  List<Recipe> _savedRecipes = [];
-  List<Recipe> get savedRecipes => _savedRecipes;
-
-  bool _isLoading = false;
-  bool get isLoading => _isLoading;
-
   void fetchSavedRecipes() async {
-    _isLoading = true;
+    _state = state.copyWith(isLoading: true);
     notifyListeners();
 
-    _savedRecipes = await _savedRecipeRepository.getSavedRecipes();
-    _isLoading = false;
+    _state = state.copyWith(
+      savedRecipes: await _savedRecipeRepository.getSavedRecipes(),
+      isLoading: false,
+    );
     notifyListeners();
   }
 }

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:food_recipe_app/presentation/component/custom_search_bar.dart';
 import 'package:food_recipe_app/presentation/component/square_recipe_card.dart';
 import 'package:food_recipe_app/presentation/screen/search_recipes/search_recipes_view_model.dart';
-import 'package:food_recipe_app/util/change_notifier_provider.dart';
+import 'package:provider/provider.dart';
 
 class SearchRecipesScreen extends StatefulWidget {
   const SearchRecipesScreen({super.key});
@@ -15,7 +15,7 @@ class _SearchRecipesScreenState extends State<SearchRecipesScreen> {
   final TextEditingController _searchController = TextEditingController();
 
   SearchRecipesViewModel get viewModel =>
-      ChangeNotifierProvider.of<SearchRecipesViewModel>(context).value;
+      context.watch<SearchRecipesViewModel>();
 
   @override
   void initState() {
@@ -74,7 +74,7 @@ class _SearchRecipesScreenState extends State<SearchRecipesScreen> {
             ListenableBuilder(
               listenable: viewModel,
               builder: (context, child) {
-                final recipes = viewModel.recipes;
+                final recipes = viewModel.state.recipes;
                 return Expanded(
                   child: Stack(
                     children: [
@@ -88,7 +88,7 @@ class _SearchRecipesScreenState extends State<SearchRecipesScreen> {
                           children: recipes
                               .map((recipe) => SquareRecipeCard(recipe: recipe))
                               .toList()),
-                      if (viewModel.isLoading)
+                      if (viewModel.state.isLoading)
                         const Center(child: CircularProgressIndicator()),
                     ],
                   ),

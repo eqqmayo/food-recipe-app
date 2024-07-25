@@ -6,7 +6,7 @@ import 'package:food_recipe_app/presentation/component/description_box.dart';
 import 'package:food_recipe_app/presentation/component/ingredient_item.dart';
 import 'package:food_recipe_app/presentation/component/noname_card.dart';
 import 'package:food_recipe_app/presentation/screen/saved_recipes/recipe_detail_view_model.dart';
-import 'package:food_recipe_app/util/change_notifier_provider.dart';
+import 'package:provider/provider.dart';
 
 class RecipeDetailScreen extends StatefulWidget {
   final Recipe recipe;
@@ -36,8 +36,7 @@ class _RecipeDetailScreenState extends State<RecipeDetailScreen>
   @override
   Widget build(BuildContext context) {
     final recipe = widget.recipe;
-    final viewModel =
-        ChangeNotifierProvider.of<RecipeDatailViewModel>(context).value;
+    final viewModel = context.watch<RecipeDatailViewModel>();
 
     viewModel.getIngredients(recipe.id);
     viewModel.getProcedures(recipe.id);
@@ -122,7 +121,7 @@ class _RecipeDetailScreenState extends State<RecipeDetailScreen>
                                 ),
                                 const Spacer(),
                                 Text(
-                                  '${viewModel.ingredients.length} items',
+                                  '${viewModel.state.ingredients.length} items',
                                   style: const TextStyle(
                                       color: Colors.grey,
                                       fontSize: 15,
@@ -133,7 +132,7 @@ class _RecipeDetailScreenState extends State<RecipeDetailScreen>
                           ),
                           Expanded(
                             child: ListView(
-                              children: viewModel.ingredients
+                              children: viewModel.state.ingredients
                                   .map(
                                     (ingredient) =>
                                         IngredientItem(ingredient: ingredient),
@@ -141,7 +140,7 @@ class _RecipeDetailScreenState extends State<RecipeDetailScreen>
                                   .toList(),
                             ),
                           ),
-                          if (viewModel.isLoading)
+                          if (viewModel.state.isLoading)
                             const Center(child: CircularProgressIndicator()),
                         ],
                       );
@@ -165,7 +164,7 @@ class _RecipeDetailScreenState extends State<RecipeDetailScreen>
                                 ),
                                 const Spacer(),
                                 Text(
-                                  '${viewModel.procedures.length} steps',
+                                  '${viewModel.state.procedures.length} steps',
                                   style: const TextStyle(
                                       color: Colors.grey,
                                       fontSize: 15,
@@ -176,7 +175,7 @@ class _RecipeDetailScreenState extends State<RecipeDetailScreen>
                           ),
                           Expanded(
                             child: ListView(
-                              children: viewModel.procedures
+                              children: viewModel.state.procedures
                                   .map(
                                     (procedure) => DescriptionBox(
                                       title: 'Step ${procedure.stepNum}',
@@ -186,7 +185,7 @@ class _RecipeDetailScreenState extends State<RecipeDetailScreen>
                                   .toList(),
                             ),
                           ),
-                          if (viewModel.isLoading)
+                          if (viewModel.state.isLoading)
                             const Center(child: CircularProgressIndicator()),
                         ],
                       );

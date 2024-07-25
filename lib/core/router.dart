@@ -16,8 +16,8 @@ import 'package:food_recipe_app/presentation/screen/search_recipes/search_recipe
 import 'package:food_recipe_app/presentation/screen/sign_in/sign_in_screen.dart';
 import 'package:food_recipe_app/presentation/screen/sign_up/sign_up_screen.dart';
 import 'package:food_recipe_app/presentation/screen/splash_screen/splash_screen.dart';
-import 'package:food_recipe_app/util/change_notifier_provider.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 
 final router = GoRouter(
   initialLocation: '/splash_screen',
@@ -38,8 +38,8 @@ final router = GoRouter(
       path: '/navigation',
       builder: (context, state) => NavigationScreen(
         HomeScreen(),
-        ChangeNotifierProvider<SavedRecipesViewModel>(
-          value: SavedRecipesViewModel(
+        ChangeNotifierProvider(
+          create: (context) => SavedRecipesViewModel(
             SavedRecipeRepositoryImpl(
               SavedRecipeDataSource(),
             ),
@@ -53,8 +53,8 @@ final router = GoRouter(
       builder: (context, state) {
         final recipe = state.extra as Recipe;
 
-        return ChangeNotifierProvider<RecipeDatailViewModel>(
-          value: RecipeDatailViewModel(
+        return ChangeNotifierProvider(
+          create: (context) => RecipeDatailViewModel(
             IngredientRepositoryImpl(
               IngredientDataSource(),
             ),
@@ -68,14 +68,13 @@ final router = GoRouter(
     ),
     GoRoute(
       path: '/search_recipes_screen',
-      builder: (context, state) =>
-          ChangeNotifierProvider<SearchRecipesViewModel>(
-        value: SearchRecipesViewModel(
+      builder: (context, state) => ChangeNotifierProvider(
+        create: (context) => SearchRecipesViewModel(
           SavedRecipeRepositoryImpl(
             SavedRecipeDataSource(),
           ),
         ),
-        child: SearchRecipesScreen(),
+        child: const SearchRecipesScreen(),
       ),
     ),
   ],
