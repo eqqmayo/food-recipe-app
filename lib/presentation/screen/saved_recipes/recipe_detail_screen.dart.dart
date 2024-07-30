@@ -36,10 +36,10 @@ class _RecipeDetailScreenState extends State<RecipeDetailScreen>
   @override
   Widget build(BuildContext context) {
     final recipe = widget.recipe;
-    final viewModel = context.watch<RecipeDatailViewModel>();
+    final viewModel = context.read<RecipeDetailViewModel>();
 
-    viewModel.getIngredients(recipe.id);
-    viewModel.getProcedures(recipe.id);
+    viewModel.getIngredients(widget.recipe.id);
+    viewModel.getProcedures(widget.recipe.id);
 
     return Scaffold(
       backgroundColor: Colors.white,

@@ -54,7 +54,7 @@ final router = GoRouter(
         final recipe = state.extra as Recipe;
 
         return ChangeNotifierProvider(
-          create: (context) => RecipeDatailViewModel(
+          create: (context) => RecipeDetailViewModel(
             IngredientRepositoryImpl(
               IngredientDataSource(),
             ),

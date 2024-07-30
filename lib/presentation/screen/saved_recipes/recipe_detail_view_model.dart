@@ -4,14 +4,14 @@ import 'package:food_recipe_app/data/repository/ingredient_repository.dart';
 import 'package:food_recipe_app/data/repository/procedure_repository.dart';
 import 'package:collection/collection.dart';
 
-class RecipeDatailViewModel with ChangeNotifier {
+class RecipeDetailViewModel with ChangeNotifier {
   final IngredientRepository _ingredientRepository;
   final ProcedureRepository _procedureRepository;
 
   RecipeDetailUiState _state = const RecipeDetailUiState();
   RecipeDetailUiState get state => _state;
 
-  RecipeDatailViewModel(
+  RecipeDetailViewModel(
     this._ingredientRepository,
     this._procedureRepository,
   ) {
