@@ -1,21 +1,23 @@
-import 'package:food_recipe_app/data/data_source/ingredient_data_source.dart';
-import 'package:food_recipe_app/data/data_source/procedure_data_source.dart';
-import 'package:food_recipe_app/data/data_source/saved_recipes_data_source.dart';
-import 'package:food_recipe_app/data/model/recipe.dart';
-import 'package:food_recipe_app/data/repository/ingredient_repository.dart';
-import 'package:food_recipe_app/data/repository/procedure_repository.dart';
-import 'package:food_recipe_app/data/repository/saved_recipes_repository.dart';
-import 'package:food_recipe_app/presentation/screen/home/home_screen.dart';
-import 'package:food_recipe_app/presentation/screen/home/navigation_screen.dart';
-import 'package:food_recipe_app/presentation/screen/saved_recipes/recipe_detail_screen.dart.dart';
-import 'package:food_recipe_app/presentation/screen/saved_recipes/recipe_detail_view_model.dart';
-import 'package:food_recipe_app/presentation/screen/saved_recipes/saved_recipes_screen.dart';
-import 'package:food_recipe_app/presentation/screen/saved_recipes/saved_recipes_view_model.dart';
-import 'package:food_recipe_app/presentation/screen/search_recipes/search_recipes_screen.dart';
-import 'package:food_recipe_app/presentation/screen/search_recipes/search_recipes_view_model.dart';
-import 'package:food_recipe_app/presentation/screen/sign_in/sign_in_screen.dart';
-import 'package:food_recipe_app/presentation/screen/sign_up/sign_up_screen.dart';
-import 'package:food_recipe_app/presentation/screen/splash_screen/splash_screen.dart';
+import 'package:food_recipe_app/core/data/repository/recipe_repository_impl.dart';
+import 'package:food_recipe_app/recipe/data/saved_recipes/data_source/ingredient_data_source.dart';
+import 'package:food_recipe_app/recipe/data/saved_recipes/data_source/procedure_data_source.dart';
+import 'package:food_recipe_app/core/data/data_source/recipe_data_source.dart';
+import 'package:food_recipe_app/recipe/data/saved_recipes/repository/ingredient_repository_impl.dart';
+import 'package:food_recipe_app/recipe/data/saved_recipes/repository/procedure_repository_impl.dart';
+import 'package:food_recipe_app/core/domain/model/recipe.dart';
+import 'package:food_recipe_app/home/presentation/home_screen.dart';
+import 'package:food_recipe_app/home/presentation/navigation_screen.dart';
+import 'package:food_recipe_app/recipe/domain/search_recipes/use_case/get_recipes_use_case.dart';
+import 'package:food_recipe_app/recipe/domain/search_recipes/use_case/search_recipes_use_case.dart';
+import 'package:food_recipe_app/recipe/presentation/saved_recipes/recipe_detail_screen.dart.dart';
+import 'package:food_recipe_app/recipe/presentation/saved_recipes/recipe_detail_view_model.dart';
+import 'package:food_recipe_app/recipe/presentation/saved_recipes/saved_recipes_screen.dart';
+import 'package:food_recipe_app/recipe/presentation/saved_recipes/saved_recipes_view_model.dart';
+import 'package:food_recipe_app/recipe/presentation/search_recipes/search_recipes_screen.dart';
+import 'package:food_recipe_app/recipe/presentation/search_recipes/search_recipes_view_model.dart';
+import 'package:food_recipe_app/auth/presentation/sign_in/sign_in_screen.dart';
+import 'package:food_recipe_app/auth/presentation/sign_up/sign_up_screen.dart';
+import 'package:food_recipe_app/home/presentation/splash_screen.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
@@ -40,8 +42,10 @@ final router = GoRouter(
         HomeScreen(),
         ChangeNotifierProvider(
           create: (context) => SavedRecipesViewModel(
-            SavedRecipeRepositoryImpl(
-              SavedRecipeDataSource(),
+            GetRecipesUseCase(
+              RecipeRepositoryImpl(
+                RecipeDataSource(),
+              ),
             ),
           ),
           child: const SavedRecipesScreen(),
@@ -69,11 +73,17 @@ final router = GoRouter(
     GoRoute(
       path: '/search_recipes_screen',
       builder: (context, state) => ChangeNotifierProvider(
-        create: (context) => SearchRecipesViewModel(
-          SavedRecipeRepositoryImpl(
-            SavedRecipeDataSource(),
-          ),
-        ),
+        create: (context) {
+          final getRecipesUseCase = GetRecipesUseCase(
+            RecipeRepositoryImpl(
+              RecipeDataSource(),
+            ),
+          );
+          return SearchRecipesViewModel(
+            getRecipesUseCase,
+            SearchRecipesUseCase(getRecipesUseCase),
+          );
+        },
         child: const SearchRecipesScreen(),
       ),
     ),
