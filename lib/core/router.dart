@@ -1,4 +1,5 @@
 import 'package:food_recipe_app/core/data/repository/recipe_repository_impl.dart';
+import 'package:food_recipe_app/core/domain/repository/recipe_repository.dart';
 import 'package:food_recipe_app/recipe/data/saved_recipes/data_source/ingredient_data_source.dart';
 import 'package:food_recipe_app/recipe/data/saved_recipes/data_source/procedure_data_source.dart';
 import 'package:food_recipe_app/core/data/data_source/recipe_data_source.dart';
@@ -7,6 +8,8 @@ import 'package:food_recipe_app/recipe/data/saved_recipes/repository/procedure_r
 import 'package:food_recipe_app/core/domain/model/recipe.dart';
 import 'package:food_recipe_app/home/presentation/home_screen.dart';
 import 'package:food_recipe_app/home/presentation/navigation_screen.dart';
+import 'package:food_recipe_app/recipe/domain/saved_recipes/repository/ingredient_repository.dart';
+import 'package:food_recipe_app/recipe/domain/saved_recipes/repository/procedure_repository.dart';
 import 'package:food_recipe_app/recipe/domain/search_recipes/use_case/get_recipes_use_case.dart';
 import 'package:food_recipe_app/recipe/domain/search_recipes/use_case/search_recipes_use_case.dart';
 import 'package:food_recipe_app/recipe/presentation/saved_recipes/recipe_detail_screen.dart.dart';
@@ -18,8 +21,31 @@ import 'package:food_recipe_app/recipe/presentation/search_recipes/search_recipe
 import 'package:food_recipe_app/auth/presentation/sign_in/sign_in_screen.dart';
 import 'package:food_recipe_app/auth/presentation/sign_up/sign_up_screen.dart';
 import 'package:food_recipe_app/home/presentation/splash_screen.dart';
+import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
+
+final getIt = GetIt.instance;
+
+void diSetup() {
+  getIt.registerSingleton<RecipeDataSource>(RecipeDataSource());
+  getIt.registerSingleton<RecipeRepository>(RecipeRepositoryImpl(getIt()));
+
+  getIt.registerSingleton<IngredientDataSource>(IngredientDataSource());
+  getIt.registerSingleton<IngredientRepository>(
+      IngredientRepositoryImpl(getIt()));
+
+  getIt.registerSingleton<ProcedureDataSource>(ProcedureDataSource());
+  getIt
+      .registerSingleton<ProcedureRepository>(ProcedureRepositoryImpl(getIt()));
+
+  getIt.registerSingleton<GetRecipesUseCase>(GetRecipesUseCase(getIt()));
+  getIt.registerSingleton<SearchRecipesUseCase>(SearchRecipesUseCase(getIt()));
+
+  getIt.registerFactory(() => SavedRecipesViewModel(getIt()));
+  getIt.registerFactory(() => SearchRecipesViewModel(getIt(), getIt()));
+  getIt.registerFactory(() => RecipeDetailViewModel(getIt(), getIt()));
+}
 
 final router = GoRouter(
   initialLocation: '/splash_screen',
@@ -41,13 +67,7 @@ final router = GoRouter(
       builder: (context, state) => NavigationScreen(
         HomeScreen(),
         ChangeNotifierProvider(
-          create: (context) => SavedRecipesViewModel(
-            GetRecipesUseCase(
-              RecipeRepositoryImpl(
-                RecipeDataSource(),
-              ),
-            ),
-          ),
+          create: (context) => getIt<SavedRecipesViewModel>(),
           child: const SavedRecipesScreen(),
         ),
       ),
@@ -58,14 +78,7 @@ final router = GoRouter(
         final recipe = state.extra as Recipe;
 
         return ChangeNotifierProvider(
-          create: (context) => RecipeDetailViewModel(
-            IngredientRepositoryImpl(
-              IngredientDataSource(),
-            ),
-            ProcedureRepositoryImpl(
-              ProcedureDataSource(),
-            ),
-          ),
+          create: (context) => getIt<RecipeDetailViewModel>(),
           child: RecipeDetailScreen(recipe: recipe),
         );
       },
@@ -73,17 +86,7 @@ final router = GoRouter(
     GoRoute(
       path: '/search_recipes_screen',
       builder: (context, state) => ChangeNotifierProvider(
-        create: (context) {
-          final getRecipesUseCase = GetRecipesUseCase(
-            RecipeRepositoryImpl(
-              RecipeDataSource(),
-            ),
-          );
-          return SearchRecipesViewModel(
-            getRecipesUseCase,
-            SearchRecipesUseCase(getRecipesUseCase),
-          );
-        },
+        create: (context) => getIt<SearchRecipesViewModel>(),
         child: const SearchRecipesScreen(),
       ),
     ),

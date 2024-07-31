@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:food_recipe_app/core/router.dart';
 
 void main() {
+  diSetup();
   runApp(const MainApp());
 }
 
