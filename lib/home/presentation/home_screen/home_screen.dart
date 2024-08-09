@@ -36,7 +36,7 @@ class _HomeScreenState extends State<HomeScreen>
 
     final viewModel = context.read<HomeViewModel>();
 
-    _subscription = viewModel.categoryStream.listen((category) {
+    _subscription = viewModel.categoryStream.listen((String category) {
       ScaffoldMessenger.of(context).hideCurrentSnackBar();
       final snackBar = SnackBar(content: Text('$category 이(가) 선택되었습니다.'));
       ScaffoldMessenger.of(context).showSnackBar(snackBar);

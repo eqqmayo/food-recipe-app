@@ -4,10 +4,14 @@ import 'package:food_recipe_app/home/presentation/home_screen/home_screen.dart';
 class NavigationScreen extends StatefulWidget {
   final HomeScreen _homeScreen;
   final Widget _savedRecipesScreen;
+  final Widget _thirdScreen;
+  final Widget _fourthScreen;
 
   const NavigationScreen(
     this._homeScreen,
-    this._savedRecipesScreen, {
+    this._savedRecipesScreen,
+    this._thirdScreen,
+    this._fourthScreen, {
     super.key,
   });
 
@@ -26,8 +30,8 @@ class _NavigationScreenState extends State<NavigationScreen> {
     _pages = [
       widget._homeScreen,
       widget._savedRecipesScreen,
-      widget._homeScreen,
-      widget._homeScreen,
+      widget._thirdScreen,
+      widget._fourthScreen,
     ];
   }
 
@@ -46,7 +50,10 @@ class _NavigationScreenState extends State<NavigationScreen> {
       ),
       child: Scaffold(
         backgroundColor: Colors.white,
-        body: Center(child: _pages[_selectedIndex]),
+        body: IndexedStack(
+          index: _selectedIndex,
+          children: _pages,
+        ),
         bottomNavigationBar: BottomNavigationBar(
           items: [
             _buildNavItem('home'),
@@ -55,7 +62,9 @@ class _NavigationScreenState extends State<NavigationScreen> {
             _buildNavItem('profile'),
           ],
           currentIndex: _selectedIndex,
-          onTap: _onItemTapped,
+          onTap: (index) {
+            _onItemTapped(index);
+          },
           backgroundColor: Colors.white,
           type: BottomNavigationBarType.fixed,
           elevation: 0,

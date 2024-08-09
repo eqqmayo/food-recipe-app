@@ -14,9 +14,6 @@ class SearchRecipesScreen extends StatefulWidget {
 class _SearchRecipesScreenState extends State<SearchRecipesScreen> {
   final TextEditingController _searchController = TextEditingController();
 
-  SearchRecipesViewModel get viewModel =>
-      context.watch<SearchRecipesViewModel>();
-
   @override
   void initState() {
     _searchController.addListener(_onTextChanged);
@@ -24,6 +21,7 @@ class _SearchRecipesScreenState extends State<SearchRecipesScreen> {
   }
 
   void _onTextChanged() {
+    final viewModel = context.read<SearchRecipesViewModel>();
     viewModel.searchRecipes(_searchController.text);
   }
 
@@ -36,6 +34,8 @@ class _SearchRecipesScreenState extends State<SearchRecipesScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final viewModel = context.watch<SearchRecipesViewModel>();
+
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -71,29 +71,23 @@ class _SearchRecipesScreenState extends State<SearchRecipesScreen> {
                 height: 3.5,
               ),
             ),
-            ListenableBuilder(
-              listenable: viewModel,
-              builder: (context, child) {
-                final recipes = viewModel.state.recipes;
-                return Expanded(
-                  child: Stack(
-                    children: [
-                      GridView(
-                          gridDelegate:
-                              const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2,
-                            crossAxisSpacing: 10,
-                            mainAxisSpacing: 10,
-                          ),
-                          children: recipes
-                              .map((recipe) => SquareRecipeCard(recipe: recipe))
-                              .toList()),
-                      if (viewModel.state.isLoading)
-                        const Center(child: CircularProgressIndicator()),
-                    ],
-                  ),
-                );
-              },
+            Expanded(
+              child: Stack(
+                children: [
+                  GridView(
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                        crossAxisSpacing: 10,
+                        mainAxisSpacing: 10,
+                      ),
+                      children: viewModel.state.recipes
+                          .map((recipe) => SquareRecipeCard(recipe: recipe))
+                          .toList()),
+                  if (viewModel.state.isLoading)
+                    const Center(child: CircularProgressIndicator()),
+                ],
+              ),
             ),
           ],
         ),

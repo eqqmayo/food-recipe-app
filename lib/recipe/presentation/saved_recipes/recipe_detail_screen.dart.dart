@@ -26,7 +26,8 @@ class _RecipeDetailScreenState extends State<RecipeDetailScreen>
     super.initState();
     _tabController = TabController(length: 2, vsync: this);
 
-    Future.microtask(() {   // 바로 접근 못하므로 잠깐 딜레이 주기
+    Future.microtask(() {
+      // 바로 접근 못하므로 잠깐 딜레이 주기
       final viewModel = context.read<RecipeDetailViewModel>();
       viewModel.getIngredients(widget.recipe.id);
       viewModel.getProcedures(widget.recipe.id);
@@ -106,93 +107,83 @@ class _RecipeDetailScreenState extends State<RecipeDetailScreen>
               child: TabBarView(
                 controller: _tabController,
                 children: [
-                  ListenableBuilder(
-                    listenable: viewModel,
-                    builder: (context, child) {
-                      return Column(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.all(18),
-                            child: Row(
-                              children: [
-                                const Text(
-                                  '1 serve',
-                                  style: TextStyle(
-                                      color: Colors.grey,
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.w400),
-                                ),
-                                const Spacer(),
-                                Text(
-                                  '${viewModel.state.ingredients.length} items',
-                                  style: const TextStyle(
-                                      color: Colors.grey,
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.w400),
-                                ),
-                              ],
+                  Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(18),
+                        child: Row(
+                          children: [
+                            const Text(
+                              '1 serve',
+                              style: TextStyle(
+                                  color: Colors.grey,
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.w400),
                             ),
-                          ),
-                          Expanded(
-                            child: ListView(
-                              children: viewModel.state.ingredients
-                                  .map(
-                                    (ingredient) =>
-                                        IngredientItem(ingredient: ingredient),
-                                  )
-                                  .toList(),
+                            const Spacer(),
+                            Text(
+                              '${viewModel.state.ingredients.length} items',
+                              style: const TextStyle(
+                                  color: Colors.grey,
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.w400),
                             ),
-                          ),
-                          if (viewModel.state.isLoading)
-                            const Center(child: CircularProgressIndicator()),
-                        ],
-                      );
-                    },
+                          ],
+                        ),
+                      ),
+                      Expanded(
+                        child: ListView(
+                          children: viewModel.state.ingredients
+                              .map(
+                                (ingredient) =>
+                                    IngredientItem(ingredient: ingredient),
+                              )
+                              .toList(),
+                        ),
+                      ),
+                      if (viewModel.state.isLoading)
+                        const Center(child: CircularProgressIndicator()),
+                    ],
                   ),
-                  ListenableBuilder(
-                    listenable: viewModel,
-                    builder: (context, child) {
-                      return Column(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.all(18),
-                            child: Row(
-                              children: [
-                                const Text(
-                                  '1 serve',
-                                  style: TextStyle(
-                                      color: Colors.grey,
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.w400),
-                                ),
-                                const Spacer(),
-                                Text(
-                                  '${viewModel.state.procedures.length} steps',
-                                  style: const TextStyle(
-                                      color: Colors.grey,
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.w400),
-                                ),
-                              ],
+                  Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(18),
+                        child: Row(
+                          children: [
+                            const Text(
+                              '1 serve',
+                              style: TextStyle(
+                                  color: Colors.grey,
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.w400),
                             ),
-                          ),
-                          Expanded(
-                            child: ListView(
-                              children: viewModel.state.procedures
-                                  .map(
-                                    (procedure) => DescriptionBox(
-                                      title: 'Step ${procedure.stepNum}',
-                                      description: procedure.description,
-                                    ),
-                                  )
-                                  .toList(),
+                            const Spacer(),
+                            Text(
+                              '${viewModel.state.procedures.length} steps',
+                              style: const TextStyle(
+                                  color: Colors.grey,
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.w400),
                             ),
-                          ),
-                          if (viewModel.state.isLoading)
-                            const Center(child: CircularProgressIndicator()),
-                        ],
-                      );
-                    },
+                          ],
+                        ),
+                      ),
+                      Expanded(
+                        child: ListView(
+                          children: viewModel.state.procedures
+                              .map(
+                                (procedure) => DescriptionBox(
+                                  title: 'Step ${procedure.stepNum}',
+                                  description: procedure.description,
+                                ),
+                              )
+                              .toList(),
+                        ),
+                      ),
+                      if (viewModel.state.isLoading)
+                        const Center(child: CircularProgressIndicator()),
+                    ],
                   ),
                 ],
               ),

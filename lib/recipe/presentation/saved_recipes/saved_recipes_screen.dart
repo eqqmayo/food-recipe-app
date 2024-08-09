@@ -25,35 +25,26 @@ class SavedRecipesScreen extends StatelessWidget {
           ),
         ),
       ),
-      body: Center(
-        child: ListenableBuilder(
-          listenable: viewModel,
-          builder: (context, child) {
-            final recipes = viewModel.state.savedRecipes;
-            return Stack(
-              children: [
-                ListView(
-                  children: recipes
-                      .map(
-                        (recipe) => Hero(
-                          tag: recipe.id,
-                          child: GestureDetector(
-                            onTap: () {
-                              context.push('/recipe_detail_screen',
-                                  extra: recipe);
-                            },
-                            child: RecipeCard(recipe: recipe),
-                          ),
-                        ),
-                      )
-                      .toList(),
-                ),
-                if (viewModel.state.isLoading)
-                  const Center(child: CircularProgressIndicator()),
-              ],
-            );
-          },
-        ),
+      body: Stack(
+        children: [
+          ListView(
+            children: viewModel.state.savedRecipes
+                .map(
+                  (recipe) => Hero(
+                    tag: recipe.id,
+                    child: GestureDetector(
+                      onTap: () {
+                        context.push('/recipe_detail_screen', extra: recipe);
+                      },
+                      child: RecipeCard(recipe: recipe),
+                    ),
+                  ),
+                )
+                .toList(),
+          ),
+          if (viewModel.state.isLoading)
+            const Center(child: CircularProgressIndicator()),
+        ],
       ),
     );
   }

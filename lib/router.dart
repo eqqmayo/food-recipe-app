@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:food_recipe_app/core/data/repository/recipe_repository_impl.dart';
 import 'package:food_recipe_app/core/domain/repository/recipe_repository.dart';
 import 'package:food_recipe_app/home/domain/home_screen/use_case/get_recipes_by_category_use_case.dart';
@@ -82,6 +83,8 @@ final router = GoRouter(
         child: const NavigationScreen(
           HomeScreen(),
           SavedRecipesScreen(),
+          Scaffold(body: Text('third')),
+          Scaffold(body: Text('fourth')),
         ),
       ),
     ),
