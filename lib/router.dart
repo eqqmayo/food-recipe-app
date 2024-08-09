@@ -68,11 +68,20 @@ final router = GoRouter(
     ),
     GoRoute(
       path: '/navigation',
-      builder: (context, state) => NavigationScreen(
-        HomeScreen(),
-        ChangeNotifierProvider(
-          create: (context) => getIt<SavedRecipesViewModel>(),
-          child: const SavedRecipesScreen(),
+      builder: (context, state) => MultiProvider(
+        providers: [
+          ChangeNotifierProvider(
+            create: (context) => getIt<HomeViewModel>(),
+            child: const HomeScreen(),
+          ),
+          ChangeNotifierProvider(
+            create: (context) => getIt<SavedRecipesViewModel>(),
+            child: const SavedRecipesScreen(),
+          ),
+        ],
+        child: const NavigationScreen(
+          HomeScreen(),
+          SavedRecipesScreen(),
         ),
       ),
     ),

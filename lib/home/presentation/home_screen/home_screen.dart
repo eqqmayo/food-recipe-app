@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:food_recipe_app/core/presentation/component/custom_search_bar.dart';
+import 'package:food_recipe_app/home/presentation/component/recipe_card.dart';
 import 'package:food_recipe_app/home/presentation/home_screen/home_view_model.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
@@ -31,7 +32,7 @@ class _HomeScreenState extends State<HomeScreen>
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 6, vsync: this);
+    _tabController = TabController(length: categories.length, vsync: this);
 
     final viewModel = context.read<HomeViewModel>();
 
@@ -104,7 +105,8 @@ class _HomeScreenState extends State<HomeScreen>
             ),
             const SizedBox(height: 20),
             Container(
-              height: 42,
+              height: 40,
+              padding: EdgeInsets.only(bottom: 10),
               alignment: Alignment.centerLeft,
               child: TabBar(
                 onTap: (index) =>
@@ -123,6 +125,28 @@ class _HomeScreenState extends State<HomeScreen>
                   borderRadius: BorderRadius.circular(12),
                   color: const Color.fromARGB(255, 57, 152, 114),
                 ),
+              ),
+            ),
+            SizedBox(
+              height: 200,
+              child: TabBarView(
+                controller: _tabController,
+                children: categories.map((category) {
+                  return Stack(
+                    children: [
+                      ListView(
+                        scrollDirection: Axis.horizontal,
+                        children: viewModel.state.recipes
+                            .map(
+                              (recipe) => RecipeCard(recipe: recipe),
+                            )
+                            .toList(),
+                      ),
+                      if (viewModel.state.isLoading)
+                        const Center(child: CircularProgressIndicator()),
+                    ],
+                  );
+                }).toList(),
               ),
             ),
           ],

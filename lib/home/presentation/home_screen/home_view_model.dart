@@ -41,13 +41,17 @@ class HomeViewModel with ChangeNotifier {
   void onSelectedCategory(String category) async {
     _streamController.add(category);
 
-    _state = state.copyWith(isLoading: true);
-    notifyListeners();
+    if (category == 'All') {
+      fetchRecipes();
+    } else {
+      _state = state.copyWith(isLoading: true);
+      notifyListeners();
 
-    _state = state.copyWith(
-      recipes: await _getRecipesByCategoryUseCase.execute(category),
-      isLoading: false,
-    );
-    notifyListeners();
+      _state = state.copyWith(
+        recipes: await _getRecipesByCategoryUseCase.execute(category),
+        isLoading: false,
+      );
+      notifyListeners();
+    }
   }
 }
