@@ -1,13 +1,15 @@
 import 'package:food_recipe_app/core/data/repository/recipe_repository_impl.dart';
 import 'package:food_recipe_app/core/domain/repository/recipe_repository.dart';
+import 'package:food_recipe_app/home/domain/home_screen/use_case/get_recipes_by_category_use_case.dart';
+import 'package:food_recipe_app/home/presentation/home_screen/home_view_model.dart';
 import 'package:food_recipe_app/recipe/data/saved_recipes/data_source/ingredient_data_source.dart';
 import 'package:food_recipe_app/recipe/data/saved_recipes/data_source/procedure_data_source.dart';
 import 'package:food_recipe_app/core/data/data_source/recipe_data_source.dart';
 import 'package:food_recipe_app/recipe/data/saved_recipes/repository/ingredient_repository_impl.dart';
 import 'package:food_recipe_app/recipe/data/saved_recipes/repository/procedure_repository_impl.dart';
 import 'package:food_recipe_app/core/domain/model/recipe.dart';
-import 'package:food_recipe_app/home/presentation/home_screen.dart';
-import 'package:food_recipe_app/home/presentation/navigation_screen.dart';
+import 'package:food_recipe_app/home/presentation/home_screen/home_screen.dart';
+import 'package:food_recipe_app/home/presentation/navigation/navigation_screen.dart';
 import 'package:food_recipe_app/recipe/domain/saved_recipes/repository/ingredient_repository.dart';
 import 'package:food_recipe_app/recipe/domain/saved_recipes/repository/procedure_repository.dart';
 import 'package:food_recipe_app/recipe/domain/search_recipes/use_case/get_recipes_use_case.dart';
@@ -20,7 +22,7 @@ import 'package:food_recipe_app/recipe/presentation/search_recipes/search_recipe
 import 'package:food_recipe_app/recipe/presentation/search_recipes/search_recipes_view_model.dart';
 import 'package:food_recipe_app/auth/presentation/sign_in/sign_in_screen.dart';
 import 'package:food_recipe_app/auth/presentation/sign_up/sign_up_screen.dart';
-import 'package:food_recipe_app/home/presentation/splash_screen.dart';
+import 'package:food_recipe_app/home/presentation/splash/splash_screen.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
@@ -28,20 +30,22 @@ import 'package:provider/provider.dart';
 final getIt = GetIt.instance;
 
 void diSetup() {
-  getIt.registerSingleton<RecipeDataSource>(RecipeDataSource());
+  getIt.registerSingleton(RecipeDataSource());
   getIt.registerSingleton<RecipeRepository>(RecipeRepositoryImpl(getIt()));
 
-  getIt.registerSingleton<IngredientDataSource>(IngredientDataSource());
+  getIt.registerSingleton(IngredientDataSource());
   getIt.registerSingleton<IngredientRepository>(
       IngredientRepositoryImpl(getIt()));
 
-  getIt.registerSingleton<ProcedureDataSource>(ProcedureDataSource());
+  getIt.registerSingleton(ProcedureDataSource());
   getIt
       .registerSingleton<ProcedureRepository>(ProcedureRepositoryImpl(getIt()));
 
-  getIt.registerSingleton<GetRecipesUseCase>(GetRecipesUseCase(getIt()));
-  getIt.registerSingleton<SearchRecipesUseCase>(SearchRecipesUseCase(getIt()));
+  getIt.registerSingleton(GetRecipesUseCase(getIt()));
+  getIt.registerSingleton(SearchRecipesUseCase(getIt()));
+  getIt.registerSingleton(GetRecipesByCategoryUseCase(getIt()));
 
+  getIt.registerFactory(() => HomeViewModel(getIt(), getIt()));
   getIt.registerFactory(() => SavedRecipesViewModel(getIt()));
   getIt.registerFactory(() => SearchRecipesViewModel(getIt(), getIt()));
   getIt.registerFactory(() => RecipeDetailViewModel(getIt(), getIt()));

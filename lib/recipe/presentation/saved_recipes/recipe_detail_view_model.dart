@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:food_recipe_app/recipe/domain/saved_recipes/model/recipe_detail_ui_state.dart';
+import 'package:food_recipe_app/recipe/presentation/saved_recipes/recipe_detail_ui_state.dart';
 import 'package:food_recipe_app/recipe/domain/saved_recipes/repository/ingredient_repository.dart';
 import 'package:food_recipe_app/recipe/domain/saved_recipes/repository/procedure_repository.dart';
 import 'package:collection/collection.dart';
@@ -22,11 +22,13 @@ class RecipeDetailViewModel with ChangeNotifier {
   void fetchIngredients() async {
     _state = state.copyWith(
         ingredients: await _ingredientRepository.getIngredients());
+    notifyListeners();
   }
 
   void fetchProcedures() async {
     _state =
         state.copyWith(procedures: await _procedureRepository.getProcedures());
+    notifyListeners();
   }
 
   void getIngredients(int recipeId) async {

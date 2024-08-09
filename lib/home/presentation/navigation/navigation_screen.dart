@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:food_recipe_app/home/presentation/home_screen.dart';
+import 'package:food_recipe_app/home/presentation/home_screen/home_screen.dart';
 
 class NavigationScreen extends StatefulWidget {
   final HomeScreen _homeScreen;

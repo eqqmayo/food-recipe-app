@@ -10,6 +10,7 @@ class SavedRecipeDataSource {
       creator: 'Hirokazu Koreeda',
       cookTime: 20,
       rating: 4.5,
+      category: 'Japanese',
     ),
     const Recipe(
       id: 2,
@@ -19,6 +20,7 @@ class SavedRecipeDataSource {
       creator: 'Ryan Gosling',
       cookTime: 10,
       rating: 4.0,
+      category: 'Korean',
     ),
     const Recipe(
       id: 3,
@@ -28,6 +30,7 @@ class SavedRecipeDataSource {
       creator: 'Rachel McAdams',
       cookTime: 10,
       rating: 4.2,
+      category: 'Hawaiian',
     ),
     const Recipe(
       id: 4,
@@ -37,6 +40,7 @@ class SavedRecipeDataSource {
       creator: 'Hirokazu Koreeda',
       cookTime: 20,
       rating: 3.8,
+      category: 'Japanese',
     ),
     const Recipe(
       id: 5,
@@ -46,6 +50,7 @@ class SavedRecipeDataSource {
       creator: 'Hirokazu Koreeda',
       cookTime: 20,
       rating: 4.5,
+      category: 'Japanese',
     ),
     const Recipe(
       id: 6,
@@ -55,6 +60,7 @@ class SavedRecipeDataSource {
       creator: 'Ryan Gosling',
       cookTime: 10,
       rating: 4.0,
+      category: 'Hawaiian',
     ),
     const Recipe(
       id: 7,
@@ -64,6 +70,7 @@ class SavedRecipeDataSource {
       creator: 'Rachel McAdams',
       cookTime: 10,
       rating: 4.2,
+      category: 'Hawaiian',
     ),
     const Recipe(
       id: 8,
@@ -73,6 +80,7 @@ class SavedRecipeDataSource {
       creator: 'Hirokazu Koreeda',
       cookTime: 20,
       rating: 3.8,
+      category: 'Japanese',
     ),
   ];
 

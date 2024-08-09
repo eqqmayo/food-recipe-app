@@ -25,6 +25,12 @@ class _RecipeDetailScreenState extends State<RecipeDetailScreen>
   void initState() {
     super.initState();
     _tabController = TabController(length: 2, vsync: this);
+
+    Future.microtask(() {   // 바로 접근 못하므로 잠깐 딜레이 주기
+      final viewModel = context.read<RecipeDetailViewModel>();
+      viewModel.getIngredients(widget.recipe.id);
+      viewModel.getProcedures(widget.recipe.id);
+    });
   }
 
   @override
@@ -36,10 +42,7 @@ class _RecipeDetailScreenState extends State<RecipeDetailScreen>
   @override
   Widget build(BuildContext context) {
     final recipe = widget.recipe;
-    final viewModel = context.read<RecipeDetailViewModel>();
-
-    viewModel.getIngredients(widget.recipe.id);
-    viewModel.getProcedures(widget.recipe.id);
+    final viewModel = context.watch<RecipeDetailViewModel>();
 
     return Scaffold(
       backgroundColor: Colors.white,
