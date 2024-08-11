@@ -1,4 +1,4 @@
-import 'package:food_recipe_app/recipe/domain/saved_recipes/model/ingredient.dart';
+import 'package:food_recipe_app/recipe/domain/recipe_detail/model/ingredient.dart';
 
 class IngredientDataSource {
   final _ingredients = [

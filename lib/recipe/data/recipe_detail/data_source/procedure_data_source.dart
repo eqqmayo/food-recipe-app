@@ -1,4 +1,4 @@
-import 'package:food_recipe_app/recipe/domain/saved_recipes/model/procedure.dart';
+import 'package:food_recipe_app/recipe/domain/recipe_detail/model/procedure.dart';
 
 class ProcedureDataSource {
   final _procedures = [

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:food_recipe_app/recipe/domain/saved_recipes/model/ingredient.dart';
+import 'package:food_recipe_app/recipe/domain/recipe_detail/model/ingredient.dart';
 
 class IngredientItem extends StatelessWidget {
   final Ingredient ingredient;

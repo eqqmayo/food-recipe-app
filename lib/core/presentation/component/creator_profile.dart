@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:food_recipe_app/recipe/domain/saved_recipes/model/creator.dart';
+import 'package:food_recipe_app/recipe/domain/recipe_detail/model/creator.dart';
 
 class CreatorProfile extends StatelessWidget {
   final Creator creator;

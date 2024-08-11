@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:food_recipe_app/recipe/presentation/saved_recipes/recipe_detail/recipe_detail_ui_state.dart';
-import 'package:food_recipe_app/recipe/domain/saved_recipes/repository/ingredient_repository.dart';
-import 'package:food_recipe_app/recipe/domain/saved_recipes/repository/procedure_repository.dart';
+import 'package:food_recipe_app/recipe/domain/recipe_detail/use_case/copy_link_use_case.dart';
+import 'package:food_recipe_app/recipe/domain/recipe_detail/repository/ingredient_repository.dart';
+import 'package:food_recipe_app/recipe/domain/recipe_detail/repository/procedure_repository.dart';
 import 'package:collection/collection.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:food_recipe_app/recipe/presentation/recipe_detail/recipe_detail_ui_state.dart';
 
 class RecipeDetailViewModel with ChangeNotifier {
   final IngredientRepository _ingredientRepository;
   final ProcedureRepository _procedureRepository;
+  final CopyLinkUseCase _copyLinkUseCase;
 
   RecipeDetailUiState _state = const RecipeDetailUiState();
   RecipeDetailUiState get state => _state;
@@ -15,6 +16,7 @@ class RecipeDetailViewModel with ChangeNotifier {
   RecipeDetailViewModel(
     this._ingredientRepository,
     this._procedureRepository,
+    this._copyLinkUseCase,
   ) {
     fetchIngredients();
     fetchProcedures();
@@ -56,5 +58,9 @@ class RecipeDetailViewModel with ChangeNotifier {
             .sorted((a, b) => a.stepNum.compareTo(b.stepNum)),
         isLoading: false);
     notifyListeners();
+  }
+
+  void copyLinkToClipboard(String url) async {
+    await _copyLinkUseCase.execute(url);
   }
 }

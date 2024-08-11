@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:food_recipe_app/core/presentation/component/pop_up_dialog.dart';
-import 'package:food_recipe_app/recipe/domain/saved_recipes/model/creator.dart';
+import 'package:food_recipe_app/recipe/domain/recipe_detail/model/creator.dart';
 import 'package:food_recipe_app/core/domain/model/recipe.dart';
 import 'package:food_recipe_app/core/presentation/component/creator_profile.dart';
 import 'package:food_recipe_app/core/presentation/component/description_box.dart';
 import 'package:food_recipe_app/core/presentation/component/ingredient_item.dart';
 import 'package:food_recipe_app/core/presentation/component/noname_card.dart';
-import 'package:food_recipe_app/recipe/presentation/saved_recipes/recipe_detail/recipe_detail_view_model.dart';
+import 'package:food_recipe_app/recipe/presentation/recipe_detail/recipe_detail_view_model.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
@@ -66,16 +66,25 @@ class _RecipeDetailScreenState extends State<RecipeDetailScreen>
                     showDialog(
                       context: context,
                       builder: (context) {
-                        return Container(
-                          height: 100,
-                          child: PopUpDialog(
-                              url: 'foodrecipe://recipe/${recipe.id}'),
-                        );
+                        return PopUpDialog(
+                            onPressed: () {
+                              viewModel.copyLinkToClipboard(
+                                  'foodrecipe://recipe/${recipe.id}');
+                              context.pop();
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                    content: Text(
+                                  'Link Copied',
+                                  textAlign: TextAlign.right,
+                                )),
+                              );
+                            },
+                            url: 'foodrecipe://recipe/${recipe.id}');
                       },
                     );
                   },
-                  leading: Icon(Icons.share),
-                  title: Text('Share'),
+                  leading: const Icon(Icons.share),
+                  title: const Text('Share'),
                 ),
               ),
               const PopupMenuItem<String>(

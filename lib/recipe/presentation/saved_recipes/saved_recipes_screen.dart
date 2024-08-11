@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:food_recipe_app/core/presentation/component/recipe_card.dart';
-import 'package:food_recipe_app/recipe/presentation/saved_recipes/saved_recipes/saved_recipes_view_model.dart';
+import 'package:food_recipe_app/recipe/presentation/saved_recipes/saved_recipes_view_model.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
