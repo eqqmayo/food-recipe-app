@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:food_recipe_app/core/presentation/component/pop_up_dialog.dart';
 import 'package:food_recipe_app/recipe/domain/saved_recipes/model/creator.dart';
 import 'package:food_recipe_app/core/domain/model/recipe.dart';
 import 'package:food_recipe_app/core/presentation/component/creator_profile.dart';
 import 'package:food_recipe_app/core/presentation/component/description_box.dart';
 import 'package:food_recipe_app/core/presentation/component/ingredient_item.dart';
 import 'package:food_recipe_app/core/presentation/component/noname_card.dart';
-import 'package:food_recipe_app/recipe/presentation/saved_recipes/recipe_detail_view_model.dart';
+import 'package:food_recipe_app/recipe/presentation/saved_recipes/recipe_detail/recipe_detail_view_model.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 class RecipeDetailScreen extends StatefulWidget {
@@ -47,7 +49,57 @@ class _RecipeDetailScreenState extends State<RecipeDetailScreen>
 
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: AppBar(backgroundColor: Colors.white),
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        actions: [
+          PopupMenuButton<String>(
+            color: Colors.white,
+            shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(const Radius.circular(16.0)),
+            ),
+            icon: const Icon(Icons.more_horiz, color: Colors.black),
+            itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
+              PopupMenuItem(
+                child: ListTile(
+                  onTap: () {
+                    context.pop();
+                    showDialog(
+                      context: context,
+                      builder: (context) {
+                        return Container(
+                          height: 100,
+                          child: PopUpDialog(
+                              url: 'foodrecipe://recipe/${recipe.id}'),
+                        );
+                      },
+                    );
+                  },
+                  leading: Icon(Icons.share),
+                  title: Text('Share'),
+                ),
+              ),
+              const PopupMenuItem<String>(
+                child: ListTile(
+                  leading: Icon(Icons.star_rate),
+                  title: Text('Rate Recipe'),
+                ),
+              ),
+              const PopupMenuItem<String>(
+                child: ListTile(
+                  leading: Icon(Icons.comment),
+                  title: Text('Review'),
+                ),
+              ),
+              const PopupMenuItem<String>(
+                child: ListTile(
+                  leading: Icon(Icons.delete),
+                  title: Text('Unsave'),
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10),
         child: Column(

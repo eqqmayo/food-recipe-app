@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:food_recipe_app/recipe/presentation/saved_recipes/saved_recipes_ui_state.dart';
+import 'package:food_recipe_app/recipe/presentation/saved_recipes/saved_recipes/saved_recipes_ui_state.dart';
 import 'package:food_recipe_app/recipe/domain/search_recipes/use_case/get_recipes_use_case.dart';
 
 class SavedRecipesViewModel with ChangeNotifier {

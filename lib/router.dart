@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:food_recipe_app/core/data/repository/recipe_repository_impl.dart';
 import 'package:food_recipe_app/core/domain/repository/recipe_repository.dart';
@@ -15,10 +16,10 @@ import 'package:food_recipe_app/recipe/domain/saved_recipes/repository/ingredien
 import 'package:food_recipe_app/recipe/domain/saved_recipes/repository/procedure_repository.dart';
 import 'package:food_recipe_app/recipe/domain/search_recipes/use_case/get_recipes_use_case.dart';
 import 'package:food_recipe_app/recipe/domain/search_recipes/use_case/search_recipes_use_case.dart';
-import 'package:food_recipe_app/recipe/presentation/saved_recipes/recipe_detail_screen.dart.dart';
-import 'package:food_recipe_app/recipe/presentation/saved_recipes/recipe_detail_view_model.dart';
-import 'package:food_recipe_app/recipe/presentation/saved_recipes/saved_recipes_screen.dart';
-import 'package:food_recipe_app/recipe/presentation/saved_recipes/saved_recipes_view_model.dart';
+import 'package:food_recipe_app/recipe/presentation/saved_recipes/recipe_detail/recipe_detail_screen.dart.dart';
+import 'package:food_recipe_app/recipe/presentation/saved_recipes/recipe_detail/recipe_detail_view_model.dart';
+import 'package:food_recipe_app/recipe/presentation/saved_recipes/saved_recipes/saved_recipes_screen.dart';
+import 'package:food_recipe_app/recipe/presentation/saved_recipes/saved_recipes/saved_recipes_view_model.dart';
 import 'package:food_recipe_app/recipe/presentation/search_recipes/search_recipes_screen.dart';
 import 'package:food_recipe_app/recipe/presentation/search_recipes/search_recipes_view_model.dart';
 import 'package:food_recipe_app/auth/presentation/sign_in/sign_in_screen.dart';
@@ -89,13 +90,22 @@ final router = GoRouter(
       ),
     ),
     GoRoute(
-      path: '/recipe_detail_screen',
+      path: '/recipe_detail_screen/:id',
       builder: (context, state) {
-        final recipe = state.extra as Recipe;
+        final id = int.tryParse(state.pathParameters['id']!) ?? 0;
 
-        return ChangeNotifierProvider(
-          create: (context) => getIt<RecipeDetailViewModel>(),
-          child: RecipeDetailScreen(recipe: recipe),
+        return FutureBuilder<Recipe?>(
+          future: fetchRecipeById(id),
+          builder: (context, snapshot) {
+            if (!snapshot.hasData || snapshot.data == null) {
+              return const Scaffold(
+                  body: Center(child: Text('Recipe not found')));
+            }
+            return ChangeNotifierProvider(
+              create: (context) => getIt<RecipeDetailViewModel>(),
+              child: RecipeDetailScreen(recipe: snapshot.data!),
+            );
+          },
         );
       },
     ),
@@ -108,3 +118,8 @@ final router = GoRouter(
     ),
   ],
 );
+
+Future<Recipe?> fetchRecipeById(int id) async {
+  return (await getIt<RecipeRepository>().getRecipes())
+      .firstWhereOrNull((recipe) => recipe.id == id);
+}

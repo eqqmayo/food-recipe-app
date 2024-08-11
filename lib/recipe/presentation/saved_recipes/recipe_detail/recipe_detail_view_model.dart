@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:food_recipe_app/recipe/presentation/saved_recipes/recipe_detail_ui_state.dart';
+import 'package:food_recipe_app/recipe/presentation/saved_recipes/recipe_detail/recipe_detail_ui_state.dart';
 import 'package:food_recipe_app/recipe/domain/saved_recipes/repository/ingredient_repository.dart';
 import 'package:food_recipe_app/recipe/domain/saved_recipes/repository/procedure_repository.dart';
 import 'package:collection/collection.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class RecipeDetailViewModel with ChangeNotifier {
   final IngredientRepository _ingredientRepository;
