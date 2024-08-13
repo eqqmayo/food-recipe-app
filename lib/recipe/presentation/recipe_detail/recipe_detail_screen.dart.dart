@@ -62,7 +62,7 @@ class _RecipeDetailScreenState extends State<RecipeDetailScreen>
               PopupMenuItem(
                 child: ListTile(
                   onTap: () {
-                    context.pop();
+                    Navigator.pop(context);
                     showDialog(
                       context: context,
                       builder: (context) {
@@ -70,7 +70,7 @@ class _RecipeDetailScreenState extends State<RecipeDetailScreen>
                             onPressed: () {
                               viewModel.copyLinkToClipboard(
                                   'foodrecipe://recipe/${recipe.id}');
-                              context.pop();
+                              Navigator.of(context).pop();
                               ScaffoldMessenger.of(context).showSnackBar(
                                 const SnackBar(
                                     content: Text(
