@@ -61,7 +61,7 @@ class SplashScreen extends StatelessWidget {
                 const SizedBox(height: 50),
                 TextButton(
                   onPressed: () {
-                    context.go('/sign_in_screen');
+                    context.go('/sign_in');
                   },
                   style: TextButton.styleFrom(
                     minimumSize: const Size(70, 70),

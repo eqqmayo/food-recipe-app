@@ -56,18 +56,18 @@ void diSetup() {
 }
 
 final router = GoRouter(
-  initialLocation: '/splash_screen',
+  initialLocation: '/splash',
   routes: [
     GoRoute(
-      path: '/splash_screen',
+      path: '/splash',
       builder: (context, state) => const SplashScreen(),
     ),
     GoRoute(
-      path: '/sign_in_screen',
+      path: '/sign_in',
       builder: (context, state) => SignInScreen(),
     ),
     GoRoute(
-      path: '/sign_up_screen',
+      path: '/sign_up',
       builder: (context, state) => SignUpScreen(),
     ),
     GoRoute(
@@ -92,17 +92,20 @@ final router = GoRouter(
       ),
     ),
     GoRoute(
-      path: '/recipe_detail_screen/:id',
+      path: '/recipe_detail/:id',
+      redirect: (context, state) async {
+        final id = int.tryParse(state.pathParameters['id']!) ?? 0;
+        final recipe = await fetchRecipeById(id);
+        if (recipe == null) {
+          return '/navigation';
+        }
+        return null;
+      },
       builder: (context, state) {
         final id = int.tryParse(state.pathParameters['id']!) ?? 0;
-
         return FutureBuilder<Recipe?>(
           future: fetchRecipeById(id),
           builder: (context, snapshot) {
-            if (!snapshot.hasData || snapshot.data == null) {
-              return const Scaffold(
-                  body: Center(child: Text('Recipe not found')));
-            }
             return ChangeNotifierProvider(
               create: (context) => getIt<RecipeDetailViewModel>(),
               child: RecipeDetailScreen(recipe: snapshot.data!),
@@ -112,7 +115,7 @@ final router = GoRouter(
       },
     ),
     GoRoute(
-      path: '/search_recipes_screen',
+      path: '/search_recipes',
       builder: (context, state) => ChangeNotifierProvider(
         create: (context) => getIt<SearchRecipesViewModel>(),
         child: const SearchRecipesScreen(),

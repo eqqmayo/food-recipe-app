@@ -11,7 +11,7 @@ void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
   diSetup();
 
-  final recipe = Recipe(
+  const recipe = Recipe(
     id: 1,
     thumbnail:
         'https://blog.kakaocdn.net/dn/bmMO3k/btsFJGT7VFo/zA06H1YOBGgDuVKjMN9XO0/img.png',
@@ -28,7 +28,7 @@ void main() {
         MaterialApp(
           home: ChangeNotifierProvider(
             create: (context) => getIt<RecipeDetailViewModel>(),
-            child: RecipeDetailScreen(recipe: recipe),
+            child: const RecipeDetailScreen(recipe: recipe),
           ),
         ),
       );

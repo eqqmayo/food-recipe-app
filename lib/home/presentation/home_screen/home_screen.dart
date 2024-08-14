@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:ffi';
 
 import 'package:flutter/material.dart';
 import 'package:food_recipe_app/core/presentation/component/custom_search_bar.dart';
@@ -107,7 +106,7 @@ class _HomeScreenState extends State<HomeScreen>
             const SizedBox(height: 20),
             Container(
               height: 40,
-              padding: EdgeInsets.only(bottom: 10),
+              padding: const EdgeInsets.only(bottom: 10),
               alignment: Alignment.centerLeft,
               child: TabBar(
                 onTap: (index) =>

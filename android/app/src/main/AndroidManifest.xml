@@ -28,7 +28,7 @@
                 <action android:name="android.intent.action.VIEW"/>
                 <category android:name="android.intent.category.DEFAULT"/>
                 <category android:name="android.intent.category.BROWSABLE"/>
-                <data android:scheme="foodrecipe" android:host="recipe" android:pathPrefix="/"/>
+                <data android:scheme="foodrecipe" android:host="recipe"/>
             </intent-filter>
         </activity>
         <!-- Don't delete the meta-data below.

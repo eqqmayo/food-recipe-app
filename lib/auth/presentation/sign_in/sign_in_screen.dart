@@ -91,7 +91,7 @@ class SignInScreen extends StatelessWidget {
                 const SizedBox(width: 5),
                 GestureDetector(
                   onTap: () {
-                    context.go('/sign_up_screen');
+                    context.go('/sign_up');
                   },
                   child: const Text(
                     'Sign up',
