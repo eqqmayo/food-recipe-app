@@ -34,7 +34,8 @@ void main() {
       );
       await tester.pumpAndSettle();
 
-      final popupMenuButtonFinder = find.byIcon(Icons.more_horiz);
+      // final popupMenuButtonFinder = find.byIcon(Icons.more_horiz);
+      final popupMenuButtonFinder = find.byKey(const Key('menu'));
       expect(popupMenuButtonFinder, findsOneWidget);
       await tester.tap(popupMenuButtonFinder);
       await tester.pumpAndSettle();

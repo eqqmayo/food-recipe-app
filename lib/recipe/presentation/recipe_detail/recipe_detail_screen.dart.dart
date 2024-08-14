@@ -7,7 +7,6 @@ import 'package:food_recipe_app/core/presentation/component/description_box.dart
 import 'package:food_recipe_app/core/presentation/component/ingredient_item.dart';
 import 'package:food_recipe_app/core/presentation/component/noname_card.dart';
 import 'package:food_recipe_app/recipe/presentation/recipe_detail/recipe_detail_view_model.dart';
-import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 class RecipeDetailScreen extends StatefulWidget {
@@ -52,10 +51,11 @@ class _RecipeDetailScreenState extends State<RecipeDetailScreen>
       appBar: AppBar(
         backgroundColor: Colors.white,
         actions: [
-          PopupMenuButton<String>(
+          PopupMenuButton(
+            key: const Key('menu'),
             color: Colors.white,
             shape: const RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(const Radius.circular(16.0)),
+              borderRadius: BorderRadius.all(Radius.circular(16.0)),
             ),
             icon: const Icon(Icons.more_horiz, color: Colors.black),
             itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
@@ -87,19 +87,19 @@ class _RecipeDetailScreenState extends State<RecipeDetailScreen>
                   title: const Text('Share'),
                 ),
               ),
-              const PopupMenuItem<String>(
+              const PopupMenuItem(
                 child: ListTile(
                   leading: Icon(Icons.star_rate),
                   title: Text('Rate Recipe'),
                 ),
               ),
-              const PopupMenuItem<String>(
+              const PopupMenuItem(
                 child: ListTile(
                   leading: Icon(Icons.comment),
                   title: Text('Review'),
                 ),
               ),
-              const PopupMenuItem<String>(
+              const PopupMenuItem(
                 child: ListTile(
                   leading: Icon(Icons.delete),
                   title: Text('Unsave'),
