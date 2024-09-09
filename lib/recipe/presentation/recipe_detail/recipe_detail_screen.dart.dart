@@ -69,7 +69,7 @@ class _RecipeDetailScreenState extends State<RecipeDetailScreen>
                         return PopUpDialog(
                             onPressed: () {
                               viewModel.copyLinkToClipboard(
-                                  'foodrecipe://recipe/${recipe.id}');
+                                  'foodrecipe://recipe.com/${recipe.id}');
                               Navigator.of(context).pop();
                               ScaffoldMessenger.of(context).showSnackBar(
                                 const SnackBar(
@@ -79,7 +79,7 @@ class _RecipeDetailScreenState extends State<RecipeDetailScreen>
                                 )),
                               );
                             },
-                            url: 'foodrecipe://recipe/${recipe.id}');
+                            url: 'foodrecipe://recipe.com/${recipe.id}');
                       },
                     );
                   },
